@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "dependencies": {
+    "pg": "^8.6.0"
+  }
+}
