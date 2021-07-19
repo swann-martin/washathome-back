@@ -1,0 +1,136 @@
+const db = require('../dbClient');
+
+class Machine {
+
+    // Getter and setter of capacity
+    get capacity() {
+        return this.capacity;
+    }
+    set capacity(value) {
+        this.capacity = value;
+    }
+    // Getter and setter of name
+    get name() {
+        return this.name;
+    }
+    set name(value) {
+        this.name = value;
+    }
+    // Getter and setter of description
+    get description() {
+        return this.description;
+    }
+    set description(value) {
+        this.description = value;
+    }
+    // Getter and setter of zipCode
+    get zipCode() {
+        return this.zip_code;
+    }
+    set zipCode(value) {
+        this.zip_code = value;
+    }
+    // Getter and setter of address
+    get address() {
+        return this.address;
+    }
+    set address(value) {
+        this.address = value;
+    }
+    // Getter and setter of city
+    get city() {
+        return this.city;
+    }
+    set city(value) {
+        this.city = value;
+    }
+    // Getter and setter of price
+    get price() {
+        return this.price;
+    }
+    set price(value) {
+        this.price = value;
+    }
+    // Getter and setter of picture
+    get picture() {
+        return this.picture;
+    }
+    set picture(value) {
+        this.picture = value;
+    }
+    // Getter and setter of userId
+    get userId() {
+        return this.user_id;
+    }
+    set userId(value) {
+        this.user_id = value;
+    }
+
+    // Class constructor
+    constructor (data) {
+        for (const prop in data) {
+            this[prop] = data[prop];
+        }
+    }
+
+    // Find one method
+    static async findOne(id) {
+        const { rows } = await db.query('SELECT * FROM machine WHERE id = $1;', [id]);
+
+        return new Machine(rows[0]);
+    }
+
+    // Find all method
+    static async findAll() {
+        const { rows } = await db.query('SELECT * FROM machine;');
+
+        return rows.map(row => new Machine(row));
+    }
+
+    // Find by criteria method
+    static async findBy (critère) {
+        // To be completed
+    }
+
+
+    // Create row method
+    async save() {
+        if (this.id) {
+            // si l'instance a un id, opère une mise à jour
+            await db.query(`
+                    UPDATE machine SET
+                    capacity = $1, name = $2,
+                    description = $3, zip_code = $4,
+                    address = $5, city = $6, price = $7,
+                    picture = $8, user_id = $9
+                    WHERE id = $10;
+                `, [
+                    this.capacity, this.name,
+                    this.description, this.zipCode,
+                    this.address, this.city,
+                    this.picture, this.userId,
+                    this.id
+                ]
+            );
+        } else {
+            const { rows } = await db.query(`
+                INSERT INTO player (capacity, name, description, zip_code, address, city, picture, user_id)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id;
+            `, [
+                this.capacity, this.name,
+                this.description, this.zipCode,
+                this.address, this.city,
+                this.picture, this.userId
+            ]);
+
+            this.id = rows[0].id;
+        }
+    }
+
+    // Delete row method
+    async delete() {
+        await db.query('DELETE FROM machine WHERE id = $1', [this.id]);
+    }
+}
+
+module.exports = Machine;

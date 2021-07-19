@@ -1,7 +1,14 @@
+const Machine = require('../models/Machine')
+
 // Controllers
 const mainController = {
-    getAll: function (req,res) {
-        res.send('Voici la liste des machines');
+
+    // Method get one machine
+    getOne: async (req,res) {
+        
+        const results = await Machine.findOne(req.params.id);
+
+        res.json(results);
     }
 }
 
