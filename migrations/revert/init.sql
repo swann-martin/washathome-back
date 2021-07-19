@@ -2,6 +2,7 @@
 
 BEGIN;
 
+-- delation of tables
 DROP TABLE include;
 DROP TABLE ancillary;
 DROP TABLE availibility;
