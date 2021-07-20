@@ -2,7 +2,7 @@
 GET http://localhost:4444/v1/machine
 
 ### récupérer une machine
-GET http://localhost:4444/v1/machine/1
+GET http://localhost:4103/v1/machine/75001
 
 ### créer ue machine
 POST http://localhost:4444/v1/machine

@@ -2,7 +2,7 @@ const db = require('../dbClient');
 
 class Machine {
 
-    // Getter and setter of capacity
+/*     // Getter and setter of capacity
     get capacity() {
         return this.capacity;
     }
@@ -64,7 +64,7 @@ class Machine {
     }
     set userId(value) {
         this.user_id = value;
-    }
+    } */
 
     // Class constructor
     constructor (data) {
