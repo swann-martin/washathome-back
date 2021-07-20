@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "build": "createdb washof && washof"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
