@@ -6,7 +6,7 @@ const mainController = require('./controllers/mainController');
 const router = express.Router();
 
 // Routes
-router.get('/',mainController.getAll);
+router.get('/machine/:zipCode',mainController.getByZipCode);
 
 // Exporting
 module.exports=router;

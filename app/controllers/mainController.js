@@ -4,9 +4,9 @@ const Machine = require('../models/Machine')
 const mainController = {
 
     // Method get one machine
-    getOne: async (req,res) {
-        
-        const results = await Machine.findOne(req.params.id);
+    getByZipCode: async function(req,res) {
+
+        const results = await Machine.findByZipCode(req.params.zipCode);
 
         res.json(results);
     }

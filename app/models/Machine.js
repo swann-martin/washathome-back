@@ -87,11 +87,12 @@ class Machine {
         return rows.map(row => new Machine(row));
     }
 
-    // Find by criteria method
-    static async findBy (critère) {
-        // To be completed
-    }
+    // Find by zip code method
+    static async findByZipCode (zipCode) {
+        const { rows } = await db.query('SELECT * FROM machine WHERE zip_code = $1;' , [zipCode]);
 
+        return rows.map(row => new Machine(row));
+    }
 
     // Create row method
     async save() {
