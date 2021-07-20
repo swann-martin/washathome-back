@@ -2,13 +2,14 @@
 
 BEGIN;
 
--- création de la base de donnée en insérant les tables
+-- creation of the database by inserting the tables
 CREATE  DOMAIN  posint  AS  int  CHECK (VALUE >  0 );
 
 CREATE TABLE "user" (
      id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
      pseudo TEXT NOT NULL,
      firstname TEXT NOT NULL,
+     lastname TEXT NOT NULL,
      phone INT NOT NULL,
      mail TEXT NOT NULL UNIQUE,
      password TEXT NOT NULL,  
