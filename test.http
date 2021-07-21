@@ -1,0 +1,22 @@
+### recuperer toutes les machines
+GET http://localhost:4444/v1/machine
+
+### récupérer une machine
+GET http://localhost:4445/v1/machine/75001
+
+### créer ue machine
+POST http://localhost:4444/v1/machine
+Content-Type: application/x-www-form-urlencoded
+
+colonne1= troisieme machine
+&colonne2=1
+
+### modifier une machine
+PATCH http://localhost:4444/machine/1
+Content-Type: application/x-www-form-urlencoded
+
+colonne1=je suis une machine
+&colonne2=1
+
+### effacer une machine
+DELETE http://localhost:4444/v1/machine/1
