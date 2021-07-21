@@ -47,7 +47,7 @@ INSERT INTO booking (status,temperature,price,user_id) VALUES
 
 INSERT INTO machine (capacity,name,description,zip_code,address,city,price,picture,user_id) VALUES
 
-(8,'super_clean','Je possède une machine à laver whirlppol de 8 kg.Je prendrai bien soin de votre linge ','75001','18 rue ernerst roussel','paris',6,'lien_picture',1),
+(8,'super_clean','Je possède une machine à laver whirlppol de 8 kg.Je prendrai bien soin de votre linge ','75013','18 rue ernerst roussel','paris',6,'lien_picture',1),
 (6,'la machine de Gigi','travail rapide et soigné du linge, machine neuve et derniere génération Samsung','31400','11 avenue Crampel','toulouse',5,'lien_picture',2),
 (7,'top propre','je travaille de chez moi donc je suis disponible pour laver votre linge','69009','31 quai Pierre Scize','lyon',7,'lien_picture',3),
 (9,'Leblanc-Family-machine','profitez de notre grande machine et d/un linge séché dehors.Notre maison est non fumeur et sans animaux','13007','10 rue Emile Duployé','Marseille',7,'lien_picture',4),
