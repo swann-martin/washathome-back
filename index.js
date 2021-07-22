@@ -1,8 +1,6 @@
 // Imports and dotenv config
 require('dotenv').config();
 const express = require('express');
-const jwt = require ('jsonwebtoken');
-const bcrypt = require ('bcrypt');
 const cors = require ("cors");
 const router = require('./app/router')
 
@@ -23,7 +21,7 @@ process.env.TOKEN_SECRET;
 app.use('/v1',router);
 
 // Port listening
-const port = process.env.PORT || 8888;
+const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
     console.log(`Server running : http://localhost:${port}`);

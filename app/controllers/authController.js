@@ -1,35 +1,43 @@
+// Imports
 const jwt = require ('jsonwebtoken');
 const User = require('../models/User');
 
+// Controller main object
 const authController = {
+
+  // Login method
   loginAction : async function (req,res) {
-        const userDB = await User.findByMail(req.body.mail);
-        if(!userDB){
+
+        // Get the user in database by the email
+        const user = await User.findByMailJoin(req.body.mail);
+        console.log(user);
+
+        // Check email existence
+        if(!user[0]){
          return res.status(400).json({message :'Error. Wrong Email'})
         }
-        if (!(userDB[0].password===req.body.password)){
-          console.log('mauvais mot de passe');
-          return res.status(400).json({ message: 'Error. Wrong login or password' })
+        // Compare the password and email concordance
+        if (!(user[0].password===req.body.password)){
+          return res.status(400).json({ message: 'Error. Wrong mail or password' })
         }
-
-        console.log('bon mot de passe');
       
-      // Create token
-      const token = jwt.sign(
-        { mail: userDB[0].mail },
-        'process.env.TOKEN_SECRET',
-        {
-          expiresIn: "5h",
-        }
-      )
+        // Create the jwt token
+        const token = jwt.sign(
+          { id:user[0].id, pseudo: user[0].pseudo },
+          'TOKEN_SECRET',
+          {
+            expiresIn: "5h",
+          }
+        )
 
-      // Fill the response object with user data, token and message
-      const response = {};
-      response.message = { message: 'Login succeeded' };
-      response.user = userDB[0]
-      response.token = token;
-      console.log(response);
-          return res.status(200).json(response)
+        // Fill the response object with user data, token and message
+        const response = { isConnected : true,
+                            user: user[0],
+                            token : token
+                          };
+
+        // Send the response with the body in json
+        return res.status(200).json(response)
   }
 }
 

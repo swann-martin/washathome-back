@@ -23,9 +23,16 @@ class User {
         return rows.map(row => new User(row));
     }
 
-    // Find by pseudo method
+    // Find by mail method
     static async findByMail (mail) {
         const { rows } = await db.query('SELECT * FROM "user" WHERE mail = $1;' , [mail]);
+
+        return rows.map(row => new User(row));
+    }
+
+    // Find by mail and send machines method
+    static async findByMailJoin (mail) {
+        const { rows } = await db.query('SELECT * FROM "user" FULL JOIN machine ON "user".id = machine.user_id WHERE "user".mail = $1 ;' , [mail]);
 
         return rows.map(row => new User(row));
     }
