@@ -8,7 +8,7 @@ const router = express.Router();
 
 // Routes
 router.get('/machine/:zipCode',mainController.getByZipCode);
-router.post('/signin',authController.loginAction);
+router.post('/login',authController.loginAction);
 
 // Exporting
 module.exports=router;
