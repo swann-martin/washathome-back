@@ -24,8 +24,8 @@ class User {
     }
 
     // Find by pseudo method
-    static async findByPseudo (pseudo) {
-        const { rows } = await db.query('SELECT * FROM "user" WHERE pseudo = $1;' , [pseudo]);
+    static async findByMail (mail) {
+        const { rows } = await db.query('SELECT * FROM "user" WHERE mail = $1;' , [mail]);
 
         return rows.map(row => new User(row));
     }
