@@ -10,6 +10,9 @@ const app = express();
 // Cross-origin resource sharing   
 app.use(cors());
 
+// Decode POST data
+app.use(express.urlencoded({ extended: true }))
+
 // Add prefix '/v1' to every routes
 app.use('/v1',router);
 

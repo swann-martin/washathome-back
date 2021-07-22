@@ -99,7 +99,7 @@ class Machine {
         if (this.id) {
             // si l'instance a un id, opère une mise à jour
             await db.query(`
-                    UPDATE machine SET
+                    UPDATE user SET
                     capacity = $1, name = $2,
                     description = $3, zip_code = $4,
                     address = $5, city = $6, price = $7,
@@ -108,19 +108,19 @@ class Machine {
                 `, [
                     this.capacity, this.name,
                     this.description, this.zipCode,
-                    this.address, this.city,
+                    this.address, this.city, this.price,
                     this.picture, this.userId,
                     this.id
                 ]
             );
         } else {
             const { rows } = await db.query(`
-                INSERT INTO player (capacity, name, description, zip_code, address, city, picture, user_id)
+                INSERT INTO machine (capacity, name, description, zip_code, address, city, price, picture, user_id)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id;
             `, [
                 this.capacity, this.name,
                 this.description, this.zipCode,
-                this.address, this.city,
+                this.address, this.city, this.price,
                 this.picture, this.userId
             ]);
 

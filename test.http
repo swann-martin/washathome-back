@@ -2,7 +2,7 @@
 GET http://localhost:4444/v1/machine
 
 ### récupérer une machine
-GET http://localhost:4445/v1/machine/75001
+GET http://localhost:4444/v1/machine/75001
 
 ### créer ue machine
 POST http://localhost:4444/v1/machine
@@ -20,3 +20,6 @@ colonne1=je suis une machine
 
 ### effacer une machine
 DELETE http://localhost:4444/v1/machine/1
+
+### s'identifier
+POST http://localhost:4445/v1/signin
