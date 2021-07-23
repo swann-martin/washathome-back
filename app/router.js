@@ -1,12 +1,15 @@
 // Imports
 const express = require('express');
 const mainController = require('./controllers/mainController');
+const authController = require('./controllers/authController');
+const authMiddleware = require('./middleware/authMiddleware')
 
 // Declarations
 const router = express.Router();
 
 // Routes
-router.get('/machine/:zipCode',mainController.getByZipCode);
+router.get('/search/:zipCode',mainController.getByZipCode);
+router.post('/login',authController.loginAction);
 
 // Exporting
 module.exports=router;
