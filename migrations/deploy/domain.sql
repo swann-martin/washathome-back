@@ -3,9 +3,6 @@
 BEGIN;
 
 
--- règle complète en online : pas vraiment maintenable en l'état
--- ^(34280|58180|20000)$|^(?!00|96|99)(?!20[0457-9])\d{5}(?<![12]80)$
-
 CREATE DOMAIN zipcode AS TEXT
 CHECK(
     -- règle générale
@@ -22,6 +19,7 @@ CHECK(
 
 ALTER TABLE machine
     ALTER COLUMN zip_code TYPE zipcode;
+
 
 CREATE DOMAIN mobilphone AS TEXT
 CHECK (
