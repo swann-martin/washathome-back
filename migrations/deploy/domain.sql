@@ -21,13 +21,6 @@ ALTER TABLE machine
     ALTER COLUMN zip_code TYPE zipcode;
 
 
-CREATE DOMAIN mobilphone AS TEXT
-CHECK (
 
- VALUE !~'(0|\+33)[6-7][0-9]{8}'
-);
-
-ALTER TABLE "user" 
-    ALTER COLUMN phone TYPE mobilphone;
 
 COMMIT;

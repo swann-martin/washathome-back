@@ -11,11 +11,7 @@ ALTER TABLE machine
 DROP DOMAIN zipcode;
 
 
-ALTER TABLE "user" 
-    ALTER COLUMN phone TYPE INT
-    USING phone :: INT;
 
-DROP DOMAIN mobilphone;
 
 
 
