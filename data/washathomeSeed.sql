@@ -4,10 +4,10 @@ BEGIN;
 
 INSERT INTO "user"(pseudo,firstname,lastname,phone,mail,password,avatar) VALUES
 
-('Magali95','Olivier','Magali','0601020304','ilagamreivilo@gmail.com','yoyo21*','lien_avatar'),
-('Magic-Gigi','Magri','Gisele','0621452145','gigi_magri@hotmail.fr','magicgigi20*','lien_avatar'),
-('Arthur03','Pelissier','Arthur','0798877445','apelissier03@oitlook.com','chevalier03','lien_avatar'),
-('HermioneG','Leblanc','Eva','0685236547','leblanc-eva@hotmail.fr','coupedefeu94*','lien_avatar'),
+('Magali95','Olivier','Magali','0601020304','ilagamreivilo@gmail.com','$2y$10$Y4r64Urv6Cudit7xE5eoW.4NmxjcEKvrX.v7nzZBK3IUUM4vQB7qm','https://randomuser.me/api/portraits/women/32.jpg'),
+('Magic-Gigi','Magri','Gisele','0621452145','gigi_magri@hotmail.fr','$2y$10$yMOnyOZWJC9DsywvNwkAtOfBGdGKelu0B2kd5r1myt/gqMsXucJEC','lien_avatar'),
+('Arthur03','Pelissier','Arthur','0798877445','apelissier03@oitlook.com','$2y$10$Z48dA.GGBuJl6ljVEnSrM.iE2TyQbQrgdfj61wE5.XzWKYXpQ8OIq','lien_avatar'),
+('HermioneG','Leblanc','Eva','0685236547','leblanc-eva@hotmail.fr','coupedefeu94*','https://randomuser.me/api/portraits/women/60.jpg'),
 ('jojo35','Vergne','Georges','0641147858','geo.vergne@yahoo.fr','Family40','lien_avatar'),
 ('Apoline075','Courant','Stephanie','0796301254','courant.steph75@gmail.com','Paris75013*','lien_avatar'),
 ('Nicomsn31','Delpit','Nicolas','0655447788','dnicolas@hotmail.com','Toulouse*nico31','lien_avatar'),
@@ -47,13 +47,13 @@ INSERT INTO booking (status,temperature,price,user_id) VALUES
 
 INSERT INTO machine (capacity,name,description,zip_code,address,city,price,picture,user_id) VALUES
 
-(8,'super_clean','Je possède une machine à laver whirlppol de 8 kg.Je prendrai bien soin de votre linge ','75013','18 rue ernerst roussel','paris',6,'lien_picture',1),
-(6,'la machine de Gigi','travail rapide et soigné du linge, machine neuve et derniere génération Samsung','31400','11 avenue Crampel','toulouse',5,'lien_picture',2),
+(8,'super_clean','Je possède une machine à laver whirlppol de 8 kg.Je prendrai bien soin de votre linge ','75013','18 rue ernerst rousselle','paris',6,'https://tse1.mm.bing.net/th?id=OIP.hsHQH80ogrojSESsZnnO1AAAAA&pid=Api&P=0&w=300&h=300',1),
+(6,'la machine de Gigi','travail rapide et soigné du linge, machine neuve et derniere génération Samsung','31400','11 avenue Crampel','toulouse',5,'https://tse2.mm.bing.net/th?id=OIP.nKGE3vTrx5wKcqgOKxU9UwHaFj&pid=Api&P=0&w=231&h=174',2),
 (7,'top propre','je travaille de chez moi donc je suis disponible pour laver votre linge','69009','31 quai Pierre Scize','lyon',7,'lien_picture',3),
 (9,'Leblanc-Family-machine','profitez de notre grande machine et d/un linge séché dehors.Notre maison est non fumeur et sans animaux','13007','10 rue Emile Duployé','Marseille',7,'lien_picture',4),
-(6,'Chez Jojo','Retraité ayant travaillé dans une blanchisserie je saurai prendre soin de votre linge','75013','148 rue de Tolbiac','paris',6,'lien_picture',5),
+(6,'Chez Jojo','Retraité ayant travaillé dans une blanchisserie je saurai prendre soin de votre linge','75013','148 rue de Tolbiac','paris',6,'https://tse4.mm.bing.net/th?id=OIP.6zmPrIWvVQqVKYcV-cwg8QHaHa&pid=Api&P=0&w=300&h=300',5),
 (7,'As du linge','super dispo je vous propose mes services.Machine récente avec de nombreux programme qui saura satisfaire toutes les demandes!','69001','104 boulevard de la croix Rousse','lyon',6,'lien_picture',7),
-(8,' Nico&Co','lave linge lg premium avec soin du linge par intelligence artificielle','31400','25 rue Jean Racine','toulouse',6,'lien_picture',6);
+(8,' Nico&Co','lave linge lg premium avec soin du linge par intelligence artificielle','31400','25 rue Jean Racine','toulouse',6,'https://tse2.mm.bing.net/th?id=OIP.oWpu66uGtQSD5b4Z2175yQHaFE&pid=Api&P=0&w=254&h=175',6);
 
 
 
