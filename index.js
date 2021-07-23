@@ -14,9 +14,6 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 
-//access config 
-process.env.TOKEN_SECRET;
-
 // Add prefix '/v1' to every routes
 app.use('/v1',router);
 

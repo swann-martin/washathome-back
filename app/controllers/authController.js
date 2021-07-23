@@ -10,7 +10,6 @@ const authController = {
 
         // Get the user in database by the email
         const user = await User.findByMailJoin(req.body.mail);
-        console.log(user);
 
         // Check email existence
         if(!user[0]){

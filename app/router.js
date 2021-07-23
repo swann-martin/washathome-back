@@ -8,7 +8,7 @@ const authMiddleware = require('./middleware/authMiddleware')
 const router = express.Router();
 
 // Routes
-router.get('/search/:zipCode',authMiddleware,mainController.getByZipCode);
+router.get('/search/:zipCode',mainController.getByZipCode);
 router.post('/login',authController.loginAction);
 
 // Exporting
