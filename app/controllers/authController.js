@@ -90,7 +90,8 @@ const authController = {
     })
 
     // Saving the new user class instanced ith all the data in the database
-    await newUser.save();
+    const created = await newUser.save();
+    console.log(created);
     
     // Send succees response if the new user finally exists in database
     const existsInDb = await User.findByPseudo(pseudo);
@@ -106,19 +107,19 @@ const authController = {
   deleteAction : async function (req,res) {
 
     // Verify user's existence in database by the id
-    const user = await User.findByPseudo(req.body.pseudo);
+    const user = await User.findByPseudo(req.params.pseudo);
     if (!user[0]){
-      return res.status(400).json({ message: "Error. This user doesn't exists." })
+      return res.status(400).json({ message: "Error. This account doesn't exists." })
     }
 
     // Delete the user
     await User.delete(user[0].id)
 
     // Send confirmation if user isn't found anymore in the database
-    const stillExists = await User.findByPseudo(req.body.pseudo);
+    const stillExists = await User.findByPseudo(req.params.pseudo);
     if(stillExists[0]){return res.status(400).json({ message: "Unknow problem. Your account haven't been deleted." })
     }
-    else{return res.status(200).json({ message: "Success ! This user have been deleted." })
+    else{return res.status(200).json({ message: "Success ! This account have been deleted." })
     }
   }
 }
