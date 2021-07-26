@@ -1,2 +1,0 @@
-PORT=8888
-PG_URL=postgres://washathome:washathome@localhost:5432/washathome

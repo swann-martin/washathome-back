@@ -1,6 +1,6 @@
 // Imports
 const {Client} = require('pg');
-
+console.log(process.env.PG_URL)
 // Create the client
 let client = new Client(process.env.PG_URL);
 if (process.env.NODE_ENV === "production") {
