@@ -45,6 +45,81 @@ const authController = {
 
         // Send the response within the body in json
         return res.status(200).json(response)
+  },
+
+  // Signup action method
+  signupAction : async function(req,res) {
+
+    // Destructure the request body
+    const {pseudo,firstname,lastname,phone,mail,password,passwordConfirm} = req.body
+    
+    // Verify pseudo inexistance in database
+    const pseudoDb = await User.findByPseudo(pseudo);
+    if(pseudoDb[0]){
+      return res.status(400).json({ message: 'Error. Pseudo already exists.' })
+    }
+
+    // Verify phone inexistance in database
+    const phoneDb = await User.findByPhone(phone);
+    if(phoneDb[0]){
+      return res.status(400).json({ message: 'Error. Phone number already exists.' })
+    }
+
+    // Verify mail inexistance in database
+    const mailDb = await User.findByMail(mail);
+    if(mailDb[0]){
+      return res.status(400).json({ message: 'Error. Mail already exists.' })
+    }
+
+    // Check password confirmation concordance
+    if(password != passwordConfirm){
+      return res.status(400).json({ message: 'Error. Password confirmation is wrong.' })
+    }
+    
+    const hashedPassword = bcrypt.hashSync(password, 10);
+
+    // Create a instance of User class with the data from the body request form
+    const newUser = new User ({
+      pseudo:pseudo,
+      firstname:firstname,
+      lastname:lastname,
+      phone:phone,
+      mail:mail,
+      password:hashedPassword,
+      avatar:"https://thispersondoesnotexist.com/"
+    })
+
+    // Saving the new user class instanced ith all the data in the database
+    await newUser.save();
+    
+    // Send succees response if the new user finally exists in database
+    const existsInDb = await User.findByPseudo(pseudo);
+    if (existsInDb){
+    return res.status(200).json({ message: 'Signup succeeded ! Your account have been created.' })
+    }
+
+    // If process arrives here, it means there's a unknown answer
+    return res.status(400).json({ message: "Unknow problem. Your account haven't been created." })
+  },
+
+  // Delete an user method
+  deleteAction : async function (req,res) {
+
+    // Verify user's existence in database by the id
+    const user = await User.findByPseudo(req.body.pseudo);
+    if (!user[0]){
+      return res.status(400).json({ message: "Error. This user doesn't exists." })
+    }
+
+    // Delete the user
+    await User.delete(user[0].id)
+
+    // Send confirmation if user isn't found anymore in the database
+    const stillExists = await User.findByPseudo(req.body.pseudo);
+    if(stillExists[0]){return res.status(400).json({ message: "Unknow problem. Your account haven't been deleted." })
+    }
+    else{return res.status(200).json({ message: "Success ! This user have been deleted." })
+    }
   }
 }
 

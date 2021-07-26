@@ -8,8 +8,10 @@ const authMiddleware = require('./middleware/authMiddleware')
 const router = express.Router();
 
 // Routes
-router.get('/search/:zipCode',mainController.getByZipCode);
-router.post('/login',authController.loginAction);
+router.get('/search/:zipCode',mainController.getByZipCode); // Search all the machines by postal code in the dynamic URL
+router.post('/login',authController.loginAction); // Login route
+router.post('/signup',authController.signupAction); // Signup route
+router.post('/delete',authController.deleteAction); // Delete an user
 
 // Exporting
 module.exports=router;
