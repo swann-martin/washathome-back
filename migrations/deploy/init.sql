@@ -10,7 +10,7 @@ CREATE TABLE "user" (
      pseudo TEXT NOT NULL,
      firstname TEXT NOT NULL,
      lastname TEXT NOT NULL,
-     phone INT NOT NULL,
+     phone VARCHAR NOT NULL,
      mail TEXT NOT NULL UNIQUE,
      password TEXT NOT NULL,  
      avatar TEXT
