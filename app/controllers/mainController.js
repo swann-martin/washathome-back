@@ -10,8 +10,10 @@ const mainController = {
         // Get the machines by zip code in database
         const machines = await Machine.findByZipCode(req.params.zipCode);
 
+        // Check if machines are found
         if(!machines[0]){return res.status(400).json({ message: "Error. No machines in that city" })}
 
+        // Send the list of machine within a json
         res.json(machines);
     }
 }

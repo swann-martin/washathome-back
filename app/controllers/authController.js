@@ -14,13 +14,13 @@ const authController = {
 
         // Check email existence
         if(!user[0]){
-         return res.status(400).json({message :'Error. Wrong Email'})
+         return res.status(400).json({message :"Error. This email doesn't exists"})
         }
 
         // Compare bcrypt hash concordance with bcryptjs
         const check = bcrypt.compareSync(req.body.password,user[0].password);
         if (check===false){
-          return res.status(400).json({ message: 'Error. Wrong mail or password' })
+          return res.status(400).json({ message: 'Error. Wrong password' })
         }
 
 /*         // Compare simply the password and email concordance
