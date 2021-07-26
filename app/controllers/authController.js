@@ -1,5 +1,6 @@
 // Imports
 const jwt = require ('jsonwebtoken');
+const bcrypt = require('bcryptjs')
 const User = require('../models/User');
 
 // Controller main object
@@ -15,15 +16,22 @@ const authController = {
         if(!user[0]){
          return res.status(400).json({message :'Error. Wrong Email'})
         }
-        // Compare the password and email concordance
-        if (!(user[0].password===req.body.password)){
+
+        // Compare bcrypt hash concordance with bcryptjs
+        const check = bcrypt.compareSync(req.body.password,user[0].password);
+        if (check===false){
           return res.status(400).json({ message: 'Error. Wrong mail or password' })
         }
+
+/*         // Compare simply the password and email concordance
+        if (!(user[0].password===req.body.password)){
+          return res.status(400).json({ message: 'Error. Wrong mail or password' })
+        } */
       
         // Create the jwt token
         const token = jwt.sign(
           { id:user[0].id, pseudo: user[0].pseudo },
-          'TOKEN_SECRET',
+          process.env.TOKEN_SECRET,
           {
             expiresIn: "5h",
           }
@@ -35,7 +43,7 @@ const authController = {
                             token : token
                           };
 
-        // Send the response with the body in json
+        // Send the response within the body in json
         return res.status(200).json(response)
   }
 }
