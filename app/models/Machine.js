@@ -73,17 +73,17 @@ class Machine {
         }
     }
 
-    // Find one method
-    static async findOne(id) {
-        const { rows } = await db.query('SELECT * FROM machine WHERE id = $1;', [id]);
-
-        return new Machine(rows[0]);
-    }
-
     // Find all method
     static async findAll() {
         const { rows } = await db.query('SELECT * FROM machine;');
 
+        return rows.map(row => new Machine(row));
+    }
+
+    // Find one method
+    static async findById(id) {
+        const { rows } = await db.query('SELECT * FROM machine WHERE id = $1;', [id]);
+        
         return rows.map(row => new Machine(row));
     }
 
@@ -123,14 +123,16 @@ class Machine {
                 this.address, this.city, this.price,
                 this.picture, this.userId
             ]);
-
             this.id = rows[0].id;
+
+            // return the id of the machine
+            return rows.map(row => new Machine(row));
         }
     }
 
     // Delete row method
-    async delete() {
-        await db.query('DELETE FROM machine WHERE id = $1', [this.id]);
+    static async delete(id) {
+        await db.query('DELETE FROM machine WHERE id = $1;', [id]);
     }
 }
 
