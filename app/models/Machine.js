@@ -52,7 +52,7 @@ class Machine {
         } else {
             const { rows } = await db.query(`
                 INSERT INTO machine (capacity, name, description, zip_code, address, city, price, picture, user_id)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id;
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;
             `, [
                 this.capacity, this.name,
                 this.description, this.zipCode,
