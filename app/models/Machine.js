@@ -123,8 +123,10 @@ class Machine {
                 this.address, this.city, this.price,
                 this.picture, this.userId
             ]);
-
             this.id = rows[0].id;
+
+            // return the id of the machine
+            return rows.map(row => new Machine(row));
         }
     }
 

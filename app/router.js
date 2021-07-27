@@ -9,7 +9,7 @@ const router = express.Router();
 
 // Routes
 router.get('/searchall',mainController.getAll); // Send all the machines
-router.get('/search/:zipCode',mainController.getByZipCode); // Search all the machines by postal code in the dynamic URL
+router.get('/search/:zipCode',mainController.getByZipCode); // Search all the machines by zip code in the dynamic URL
 router.post('/machine',mainController.submitAction); // Add a new machine
 router.delete('/machine/:id',mainController.deleteAction); // Delete a machine
 router.post('/login',authController.loginAction); // Login route
