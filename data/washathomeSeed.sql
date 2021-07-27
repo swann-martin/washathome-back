@@ -97,13 +97,14 @@ INSERT INTO availibility(open_hour,end_hour,booked,machine_id) VALUES
 
 INSERT INTO option (name,price) VALUES
 
-('séchage',3),
-('lessive spéciale  linge blanc ou laine ou couleur ',2),
-('séchage du linge au grand air',4),
-('lingette anti décoloration',1),
-('repassage avec centrale vapeur professionnelle',5),
-('capsule de lessive',2),
-('séchage possible de votre linge',3);
+('lessive spéciale',3),
+('lingette anti decoloration',2),
+('séchage au sèche linge avec pliage',5),
+('pliage du linge',2),
+('repassage',8),
+('séchage au sèche linge',3),
+('séparation des couleurs',5)
+
 
 INSERT INTO  include (booking_id,option_id) VALUES
     (1,6),
