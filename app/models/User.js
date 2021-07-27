@@ -30,6 +30,20 @@ class User {
         return rows.map(row => new User(row));
     }
 
+    // Find by pseudo method 
+    static async findByPseudo (pseudo) {
+        const { rows } = await db.query('SELECT * FROM "user" WHERE pseudo = $1;' , [pseudo]);
+
+        return rows.map(row => new User(row));
+    }
+
+    // Find by phone method
+    static async findByPhone (phone) {
+        const { rows } = await db.query('SELECT * FROM "user" WHERE phone = $1;' , [phone]);
+
+        return rows.map(row => new User(row));
+    }
+
     // Find by mail and send machines method
     static async findByMailJoin (mail) {
         const { rows } = await db.query('SELECT * FROM "user" FULL JOIN machine ON "user".id = machine.user_id WHERE "user".mail = $1 ;' , [mail]);
@@ -56,7 +70,7 @@ class User {
         } else {
             const { rows } = await db.query(`
                 INSERT INTO "user" (pseudo, firstname, lastname, phone, mail, password, avatar)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id;
+                VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
             `, [
                 this.pseudo, this.firstname,
                 this.lastname, this.phone,
@@ -64,12 +78,15 @@ class User {
                 this.avatar
             ]);
             this.id = rows[0].id;
+
+            // return the id of the user
+            return rows.map(row => new User(row));
         }
     }
 
     // Delete row method
-    async delete() {
-        await db.query('DELETE FROM "user" WHERE id = $1', [this.id]);
+    static async delete(id) {
+        await db.query('DELETE FROM "user" WHERE id = $1', [id]);
     }
 }
 
