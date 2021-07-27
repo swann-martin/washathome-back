@@ -10,18 +10,15 @@ CREATE TABLE "user" (
      pseudo TEXT NOT NULL,
      firstname TEXT NOT NULL,
      lastname TEXT NOT NULL,
-     phone INT NOT NULL,
+     phone VARCHAR NOT NULL,
      mail TEXT NOT NULL UNIQUE,
      password TEXT NOT NULL,  
      avatar TEXT
 );
 
-CREATE TABLE booking (
-    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    status TEXT NOT NULL,
-    temperature INT NOT NULL,
-    price INT NOT NULL,
-    user_id INT REFERENCES "user"(id)
+CREATE TABLE "status" (
+ id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+ label TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE machine (
@@ -32,10 +29,23 @@ CREATE TABLE machine (
    zip_code INT NOT NULL,
    address TEXT NOT NULL,
    city TEXT NOT NULL,
+   latitude FLOAT ,
+   longitude FLOAT,
    price INT NOT NULL,
    picture TEXT,
    user_id INT REFERENCES "user"(id)
 );
+
+CREATE TABLE booking (
+    id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    temperature INT NOT NULL,
+    time_resa TIMESTAMPTZ ,
+    user_id INT REFERENCES "user"(id),
+    machine_id INT REFERENCES machine(id),
+    status_id INT REFERENCES "status"(id)
+);
+
+
 
 CREATE TABLE availibility (
   id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
