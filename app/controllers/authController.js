@@ -33,14 +33,12 @@ const authController = {
           }
         )
 
-        // Fill the response object with user data, token and message
-        const response = { isConnected : true,
-                            user: user[0],
-                            token : token
-                          };
-
-        // Send the response within the body in json
-        return res.status(200).json(response)
+        // Send the response with connection status, user's id, token and message
+        return res.status(200).json({
+                                      isConnected : true,
+                                      user: user[0],
+                                      token : token
+                                    })
         }
         catch(error){
           return res.status(400).json({ message: error.message });
@@ -91,16 +89,26 @@ const authController = {
       })
 
       // Saving the new user class instanced ith all the data in the database
-      const created = await newUser.save();
-      console.log(created);
-      
-      // Send succees response if the new user finally exists in database
-      const existsInDb = await User.findByPseudo(pseudo);
-      if (existsInDb){
-      return res.status(201).json({ message: 'Signup succeeded ! Your account have been created.' })
-      }
+      const userDb = await newUser.save();
+
+      // Create the jwt token
+      const token = jwt.sign(
+        { id:userDb[0].id, pseudo: userDb[0].pseudo },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: "5h",
+        }
+      )
+
+      return res.status(201).json({ message : 'Signup succeeded ! Your account have been created.',
+                                    isConnected : true,
+                                    user : userDb[0].id,
+                                    pseudo : userDb[0].pseudo,
+                                    token:token
+                                  })
     }  
     catch(error){
+      console.log(error);
       return res.status(400).json({ message: error.message });
     }
   },
@@ -112,7 +120,7 @@ const authController = {
       // Verify user's existence in database by the id
       const user = await User.findByPseudo(req.params.pseudo);
       if (!user[0]){
-        return res.status(400).json({ message: "Error. This account doesn't exists." })
+        throw new Error( "Error. This account doesn't exists." )
       }
 
       // Delete the user
