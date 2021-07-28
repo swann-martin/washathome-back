@@ -35,7 +35,6 @@ INSERT INTO "status" ( label) VALUES
 
 
 INSERT INTO machine (capacity,name,description,zip_code,address,city,latitude,longitude,price,picture,user_id) VALUES
-
 (8,'super_clean','Je possède une machine à laver whirlppol de 8 kg.Je prendrai bien soin de votre linge ','75013','18 rue ernerst rousselle','paris',48.825127,2.354642,1,'https://tse1.mm.bing.net/th?id=OIP.hsHQH80ogrojSESsZnnO1AAAAA&pid=Api&P=0&w=300&h=300',1),
 (6,'la machine de Gigi','travail rapide et soigné du linge, machine neuve et derniere génération Samsung','31400','11 avenue Crampel','toulouse',43.58437,1.452135,2,'https://tse2.mm.bing.net/th?id=OIP.nKGE3vTrx5wKcqgOKxU9UwHaFj&pid=Api&P=0&w=231&h=174',2),
 (7,'top propre','je travaille de chez moi donc je suis disponible pour laver votre linge','69009','31 quai Pierre Scize','lyon',45.76662,4.816867,10,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQA_CqQITzbU39z8RD1X_4lEGYEBTkFEsqqjQ&usqp=CAU',3),
