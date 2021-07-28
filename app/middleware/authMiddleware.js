@@ -23,7 +23,7 @@ module.exports = function (req,res,next){
     next()
   }
   catch(error){
-    throw new Error(error.message)
+    return res.status(400).json(error.message)
   }
   // Pass the req object to the next express route function
 }

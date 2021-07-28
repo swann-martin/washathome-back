@@ -23,6 +23,13 @@ class Machine {
         return rows.map(row => new Machine(row));
     }
 
+    // Find by user id method
+    static async findByUserId(id) {
+        const { rows } = await db.query('SELECT * FROM machine WHERE user_id = $1;', [id]);
+        
+        return rows.map(row => new Machine(row));
+    }
+
     // Find by zip code method
     static async findByZipCode (zipCode) {
         const { rows } = await db.query('SELECT * FROM machine WHERE zip_code = $1;' , [zipCode]);
@@ -52,14 +59,14 @@ class Machine {
             );
         } else {
             const { rows } = await db.query(`
-                INSERT INTO machine (capacity, name, description, zip_code, address, city, price, picture, user_id)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;
+                INSERT INTO machine (capacity, name, description, zip_code, address, city, latitude, longitude, price, picture, user_id)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *;
             `, [
                 this.capacity, this.name,
                 this.description, this.zipCode,
-                this.address, this.city, this.price,
+                this.address, this.city,
                 this.latitude, this.longitude,
-                this.picture, this.userId
+                this.price, this.picture, this.userId
             ]);
             this.id = rows[0].id;
 
