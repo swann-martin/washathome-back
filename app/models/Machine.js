@@ -38,13 +38,14 @@ class Machine {
                     UPDATE user SET
                     capacity = $1, name = $2,
                     description = $3, zip_code = $4,
-                    address = $5, city = $6, price = $7,
-                    picture = $8, user_id = $9
-                    WHERE id = $10;
+                    address = $5, city = $6, latitude = $7, longitude = $8,
+                    price = $9, picture = $10, user_id = $11,
+                    WHERE id = $12;
                 `, [
                     this.capacity, this.name,
                     this.description, this.zipCode,
                     this.address, this.city, this.price,
+                    this.latitude, this.longitude,
                     this.picture, this.userId,
                     this.id
                 ]
@@ -57,6 +58,7 @@ class Machine {
                 this.capacity, this.name,
                 this.description, this.zipCode,
                 this.address, this.city, this.price,
+                this.latitude, this.longitude,
                 this.picture, this.userId
             ]);
             this.id = rows[0].id;

@@ -31,6 +31,7 @@ const mainController = {
 
     // Signup action method
     submitAction : async function(req,res) {
+
         
         try{
             // Destructure the request body
@@ -51,11 +52,12 @@ const mainController = {
 
             // Saving the new machine class instanced with all the data in the database
             const returned = await newMachine.save();
-
+          
             // Send confirmation message
             return res.status(200).json({ machine:returned, message: "Success ! The machine have been added." })
         }
         catch(error){
+            console.log(error);
             return res.status(400).json({ message: error.message });
         }
         

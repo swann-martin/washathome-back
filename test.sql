@@ -24,6 +24,6 @@ FROM "user" AS u
 INNER JOIN booking AS b ON b.user_id = u.id
 INNER JOIN status AS s ON s.id = b.status_id
 INNER JOIN machine AS m ON m.id = b.machine_id
---WHERE u.id = 2;
+WHERE u.id = 2
 
 
