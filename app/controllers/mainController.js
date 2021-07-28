@@ -33,8 +33,10 @@ const mainController = {
     submitAction : async function(req,res) {
 
         // Destructure the request body
-        const {userId,capacity,name,description,zipCode,address,city,price} = req.body
+        const {capacity,name,description,zipCode,address,city,latitude,longitude,price,picture,userId} = req.body
         
+        console.log(latitude,longitude);
+
         // Create a instance of Machine class with the data from the body request form
         const newMachine = new Machine ({
         capacity:capacity,
@@ -43,20 +45,22 @@ const mainController = {
         zipCode:zipCode,
         address:address,
         city:city,
+        latitude:latitude,
+        longitude:longitude,
         price:price,
-        picture:"https://media.2oceansvibe.com/wp-content/uploads/2016/01/sexysocksdesign221.jpg",
+        picture:picture,
         userId:userId
         })
 
         try{
-            // Saving the new machine class instanced ith all the data in the database
+            // Saving the new machine class instanced with all the data from the database
             const id = await newMachine.save();
-            console.log(id[0]);
 
             // Send confirmation message
             return res.status(200).json({ message: "Success ! The machine have been added." })
         }
         catch(error){
+            console.log(error);
             return res.status(400).json({ message: error.message });
         }
         

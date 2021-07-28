@@ -38,25 +38,27 @@ class Machine {
                     UPDATE user SET
                     capacity = $1, name = $2,
                     description = $3, zip_code = $4,
-                    address = $5, city = $6, price = $7,
-                    picture = $8, user_id = $9
-                    WHERE id = $10;
+                    address = $5, city = $6, latitude = $7, longitude = $8,
+                    price = $9, picture = $10, user_id = $11,
+                    WHERE id = $12;
                 `, [
                     this.capacity, this.name,
                     this.description, this.zipCode,
                     this.address, this.city, this.price,
+                    this.latitude, this.longitude,
                     this.picture, this.userId,
                     this.id
                 ]
             );
         } else {
             const { rows } = await db.query(`
-                INSERT INTO machine (capacity, name, description, zip_code, address, city, price, picture, user_id)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id;
+                INSERT INTO machine (capacity, name, description, zip_code, address, city, latitude, longitude, price, picture, user_id)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING id;
             `, [
                 this.capacity, this.name,
                 this.description, this.zipCode,
                 this.address, this.city, this.price,
+                this.latitude, this.longitude,
                 this.picture, this.userId
             ]);
             this.id = rows[0].id;
