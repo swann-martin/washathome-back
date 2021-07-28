@@ -117,10 +117,17 @@ const authController = {
   deleteAction : async function (req,res) {
 
     try{
-      // Verify user's existence in database by the id
+      // Get the user from the database for verification
       const user = await User.findByPseudo(req.params.pseudo);
+
+      // Send error if the user doesn't exist
       if (!user[0]){
         throw new Error( "Error. This account doesn't exists." )
+      }
+
+      // Send error if the token doesn't correspond to the right user
+      if (user[0].pseudo != req.user.pseudo){
+        throw new Error( "Error. You tried to delete another user." )
       }
 
       // Delete the user
