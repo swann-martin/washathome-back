@@ -23,8 +23,8 @@ router.post('/signup',authController.signupAction); // Signup route
 router.delete('/account/:pseudo',authMiddleware,authController.deleteAction); // Delete an user
 // CRUD reservations
 router.get('/reservation/:userId',bookController.getByUser); // Send all the reservations by user id
-router.post('/reservation',bookController.submitAction); // Add a new reservation
-router.delete('/reservation/:id',mainController.deleteAction); // Delete a machine
+router.post('/reservation',authMiddleware,bookController.submitAction); // Add a new reservation
+router.delete('/reservation/:id',bookController.deleteAction); // Delete a reservation
 
 // Exporting
 module.exports=router;

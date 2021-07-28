@@ -42,7 +42,7 @@ class Machine {
         if (this.id) {
             // si l'instance a un id, opère une mise à jour
             await db.query(`
-                    UPDATE user SET
+                    UPDATE machine SET
                     capacity = $1, name = $2,
                     description = $3, zip_code = $4,
                     address = $5, city = $6, latitude = $7, longitude = $8,

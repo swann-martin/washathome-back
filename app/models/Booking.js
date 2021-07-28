@@ -42,13 +42,13 @@ class Booking {
         if (this.id) {
             // si l'instance a un id, opère une mise à jour
             await db.query(`
-                    UPDATE user SET
-                    temperature = $1, price = $2,
+                    UPDATE booking SET
+                    temperature = $1, time_resa = $2,
                     bringer_id = $3, washer_id = $4,
                     machine_id = $5, status_id = $6,
                     WHERE id = $7;
                 `, [
-                    this.temperature, this.price,
+                    this.temperature, this.timeResa,
                     this.bringerId, this.washerId,
                     this.machineId, this.statusId,
                     this.id
@@ -56,17 +56,17 @@ class Booking {
             );
         } else {
             const { rows } = await db.query(`
-                INSERT INTO machine (temperature, price, bringer_id, washer_id, machine_id, status_id)
-                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *;
+                INSERT INTO booking (temperature, time_resa, bringer_id, washer_id, machine_id, status_id)
+                VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;
             `, [
-                this.temperature, this.price,
+                this.temperature, this.timeResa,
                 this.bringerId, this.washerId,
                 this.machineId, this.statusId
             ]);
             this.id = rows[0].id;
 
             // return the id of the machine
-            return rows.map(row => new Machine(row));
+            return rows.map(row => new Booking(row));
         }
     }
 

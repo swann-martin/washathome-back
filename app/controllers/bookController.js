@@ -31,15 +31,20 @@ const bookController = {
     // Signup action method
     submitAction : async function(req,res) {
 
-        
         try{
             // Destructure the request body
-            const {temperature,price,bringerId,washerId,machineId,statusId} = req.body
+            const {temperature,timeResa,bringerId,washerId,machineId,statusId} = req.body
             
+            // Send error if the token doesn't correspond to the right user
+            if (!(bringerId == req.user.id)){throw new Error( "Error. You tried to book from another user." )}
+
+            // Send error if the token doesn't correspond to the right user
+            if (!(bringerId == washerId)){throw new Error( "You cannot book your own machine." )}
+
             // Create a instance of booking class with the data from the body request form
             const newBooking = new Booking ({
             temperature:temperature,
-            price:price,
+            timeResa:timeResa,
             bringer:bringerId,
             washer:washerId,
             machine:machineId,
