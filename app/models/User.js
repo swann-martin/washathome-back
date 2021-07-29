@@ -46,8 +46,8 @@ class User {
 
     // Find by mail and send machines method
     static async findByMailJoin (mail) {
-        const { rows } = await db.query('SELECT * FROM "user" FULL JOIN machine ON "user".id = machine.user_id WHERE "user".mail = $1 ;' , [mail]);
-
+        const {rows} = await db.query('SELECT * FROM "user" FULL OUTER JOIN machine ON "user".id = machine.user_id WHERE "user".mail = $1 ;' , [mail]);
+        console.log(rows);
         return rows.map(row => new User(row));
     }
 

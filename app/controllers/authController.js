@@ -1,5 +1,7 @@
 // Imports
 const User = require('../models/User');
+const Machine = require('../models/Machine');
+const Booking = require('../models/Booking');
 const jwt = require ('jsonwebtoken');
 const bcrypt = require('bcryptjs')
 
@@ -11,7 +13,12 @@ const authController = {
 
         try{
         // Get the user in database by the email
-        const user = await User.findByMailJoin(req.body.mail);
+        const user = await User.findByMail(req.body.mail);
+
+        // Get the user's machines and bookings to join in the response
+        const machines = await Machine.findByUserId(user[0].id)
+        const washerBookings = await Booking.findByWasherId(user[0].id)
+        const bringerBookings = await Booking.findByBringerId(user[0].id)
 
         // Check email existence
         if(!user[0]){
@@ -37,7 +44,10 @@ const authController = {
         return res.status(200).json({
                                       isConnected : true,
                                       user: user[0],
-                                      token : token
+                                      token : token,
+                                      machines,
+                                      washerBookings,
+                                      bringerBookings
                                     })
         }
         catch(error){
@@ -54,26 +64,18 @@ const authController = {
     try{
       // Verify pseudo inexistance in database
       const pseudoDb = await User.findByPseudo(pseudo);
-      if(pseudoDb[0]){
-        throw new Error( 'Error. Pseudo already exists.' )
-      }
+      if(pseudoDb[0]){throw new Error( 'Error. Pseudo already exists.' )}
 
       // Verify phone inexistance in database
       const phoneDb = await User.findByPhone(phone);
-      if(phoneDb[0]){
-        throw new Error( 'Error. Phone number already exists.' )
-      }
+      if(phoneDb[0]){throw new Error( 'Error. Phone number already exists.' )}
 
       // Verify mail inexistance in database
       const mailDb = await User.findByMail(mail);
-      if(mailDb[0]){
-        throw new Error( 'Error. Mail already exists.' )
-      }
+      if(mailDb[0]){throw new Error( 'Error. Mail already exists.' )}
 
       // Check password confirmation concordance
-      if(password != passwordConfirm){
-        throw new Error( 'Error. Password confirmation is wrong.' )
-      }
+      if(password != passwordConfirm){throw new Error( 'Error. Password confirmation is wrong.' )}
       
       const hashedPassword = bcrypt.hashSync(password, 10);
 
@@ -99,13 +101,13 @@ const authController = {
           expiresIn: "5h",
         }
       )
-
+      
+      // Send confirmation message
       return res.status(201).json({ message : 'Signup succeeded ! Your account have been created.',
                                     isConnected : true,
                                     user : userDb[0].id,
                                     pseudo : userDb[0].pseudo,
-                                    token:token
-                                  })
+                                    token:token })
     }  
     catch(error){
       console.log(error);
@@ -121,23 +123,17 @@ const authController = {
       const user = await User.findByPseudo(req.params.pseudo);
 
       // Send error if the user doesn't exist
-      if (!user[0]){
-        throw new Error( "Error. This account doesn't exists." )
-      }
+      if (!user[0]){throw new Error( "Error. This account doesn't exists." )}
 
       // Send error if the token doesn't correspond to the right user
-      if (user[0].pseudo != req.user.pseudo){
-        throw new Error( "Error. You tried to delete another user." )
-      }
+      if (user[0].pseudo != req.user.pseudo){throw new Error( "Error. You tried to delete another user." )}
 
       // Delete the user
       await User.delete(user[0].id)
 
       // Send error if user is found anymore in the database
       const stillExists = await User.findByPseudo(req.params.pseudo);
-      if(stillExists[0]){        
-        throw new Error( "Unknow problem. Your account haven't been deleted." )
-      }
+      if(stillExists[0]){throw new Error( "Unknow problem. Your account haven't been deleted." )}
 
       // Otherwise return a confirmation
       return res.status(200).json({ message: "Success ! This account have been deleted." })
