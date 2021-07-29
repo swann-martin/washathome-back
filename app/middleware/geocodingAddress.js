@@ -3,9 +3,8 @@ const fetch = require('node-fetch')
 module.exports = async function geocoding (req,res,next) {
     try{
         // Get and concatenate the address from the json request body
-        const {zipCode,city,address} = req.body
-        const total = address+"+"+city+"+"+zipCode
-        const concatenated = total.split(' ').join('+');
+        const {address} = req.body
+        const concatenated = address.split(' ').join('+');
 
         // Fetch the gouv.fr api with the concatenated string
         const result = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${concatenated}`);
@@ -14,8 +13,10 @@ module.exports = async function geocoding (req,res,next) {
         const json = await result.json()
         
         // Get the latitude and the longitude from the json response
-        const latitude = json.features[0].geometry.coordinates[0];
-        const longitude = json.features[0].geometry.coordinates[1];
+        const x = json.features[0].properties.x;
+        const y = json.features[0].properties.y;
+
+        console.log(x,y);
         
         // Assignate back in the request body
         req.body.latitude = latitude;

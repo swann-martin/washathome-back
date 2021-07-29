@@ -45,6 +45,20 @@ const mainController = {
         }
     },
 
+    // Method get one machine
+    getClosest: async function (req,res) {
+        try {
+            // Get the machines by zip code in database
+            const machines = await Machine.findClosest(req.body.latitude,req.body.longitude);
+
+            // Send the list of machine within a json
+            res.json(machines);
+        }
+        catch (error) {
+            return res.status(400).json({ message: error.message });
+        }
+    },
+
     // Signup action method
     submitAction : async function(req,res) {
         try{
