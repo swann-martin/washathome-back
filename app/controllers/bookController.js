@@ -20,6 +20,16 @@ const bookController = {
             // Get the bookings by the bringer id
             const bringerBookings = await Booking.findByBringerId(req.params.userId);
 
+            // Delete the personnal information of the washer according to the status of the booking
+            bringerBookings.forEach(element=>{  if( element.resa.status_id == 1 || element.resa.status_id == 5 || element.resa.status_id == 6 ){
+                                                    delete element.machine.machine_address;                                         
+                                                    delete element.machine.machine_zip_code;
+                                                    delete element.machine.machine_city;
+                                                    delete element.machine.machine_latitude;
+                                                    delete element.machine.machine_longitude;
+                                                    delete element.washer.washer_phone;
+                                                    delete element.washer.washer_mail; }})
+
             // Send the list of booking within a json
             res.json({ washerBookings:washerBookings, bringerBookings:bringerBookings });
         }
@@ -61,9 +71,6 @@ const bookController = {
             console.log(error);
             return res.status(400).json({ message: error.message });
         }
-        
-/*         // If process arrives here, it means there's a unknown answer
-        return res.status(400).json({ message: "Unknow problem. Your booking haven't been created." }) */
     },
 
     // Delete an user method
