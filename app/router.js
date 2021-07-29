@@ -24,6 +24,7 @@ router.delete('/account/:pseudo',authMiddleware,authController.deleteAction); //
 // CRUD reservations
 router.get('/reservation/:userId',bookController.getByUser); // Send all the reservations by user id
 router.post('/reservation',authMiddleware,bookController.submitAction); // Add a new reservation
+router.patch('/reservation',authMiddleware,bookController.stateAction); // Change the state of a reservation
 router.delete('/reservation/:id',bookController.deleteAction); // Delete a reservation
 
 // Exporting

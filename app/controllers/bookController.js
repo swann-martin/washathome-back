@@ -73,6 +73,36 @@ const bookController = {
         }
     },
 
+    stateAction : async function (req,res) {
+        try{
+        // Get the id and the status in the request body
+        const {id,statusId} = req.body
+
+        // Verify if the status isn't already the same
+        const bookingDb = await Booking.findById(id);
+        if(bookingDb[0].status_id==statusId){ throw new Error( "Error. The booking already has this state." ) }
+        
+        // Send error if the token doesn't correspond to the right user
+        if (!(bookingDb[0].bringer_id == req.user.id || bookingDb[0].washer_id == req.user.id)){
+            throw new Error( "Error. You tried to book from another user." )
+        }
+        
+        // Instance the active record class and call the change state function
+        const update = new Booking({ id:id, statusId: statusId })
+        const returned = await update.changeState(update);
+
+        // Check if booking doesn't exist anymore in the database
+        if(!(returned[0].status_id==statusId)){ throw new Error( "Unknow problem. The booking state haven't been updated." ) }
+
+        // Otherwise return a succees message
+        return res.status(200).json({ message: "Success ! This booking have been updated." })
+        }
+        catch(error){
+            return res.status(400).json({ message: error.message });
+        }
+
+    },
+
     // Delete an user method
     deleteAction : async function (req,res) {
 

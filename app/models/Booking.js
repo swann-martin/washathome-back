@@ -132,6 +132,21 @@ class Booking {
         }
     }
 
+        // Create row method
+        async changeState() {
+            const { rows } = await db.query(`
+                    UPDATE booking 
+                    SET status_id = $1
+                    WHERE id = $2 RETURNING *;
+                `, [this.statusId,this.id]
+            );
+
+            this.id = rows[0].id;
+
+            // return the id of the machine
+            return rows.map(row => new Booking(row))
+        }
+
     // Delete row method
     static async delete(id) {
         await db.query('DELETE FROM booking WHERE id = $1;', [id]);

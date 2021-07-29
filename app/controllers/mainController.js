@@ -6,9 +6,12 @@ const mainController = {
 
     // Get all the machines method
     getAll: async function (req,res) {
-        const results = await Machine.findAll();
-        
-        res.json(results);
+        try{
+            const results = await Machine.findAll();
+            res.json(results);
+        }catch(error){
+            return res.status(400).json({ message: error.message });
+        }
     },
 
     // Get one machine bu its id method
@@ -44,8 +47,6 @@ const mainController = {
 
     // Signup action method
     submitAction : async function(req,res) {
-
-        
         try{
             // Destructure the request body
             const {userId,capacity,name,description,zipCode,address,city,latitude,longitude,price} = req.body
