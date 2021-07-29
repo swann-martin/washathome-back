@@ -4,7 +4,7 @@ BEGIN;
 
 INSERT INTO "user"(pseudo,lastname,firstname,phone,mail,password,avatar) VALUES
 
-('Magali95','Olivier','Magali','0601020304','ilagamreivilo@gmail.com','$2y$10$EdF9iNGmH8lkvgTKhG08heNcYdfBLwdbqDDgXjRwr3v4EXQ.t/aia','https://randomuser.me/api/portraits/women/32.jpg'),
+('Magali95','Olivier','Magali','0601020304','ilagamreivilo@gmail.com','$2y$12$1J1F0duekS2wxVBpuQ8DqOMx1gTfNsnsOEOoIkonE4DDbho8Y6ifO ','https://randomuser.me/api/portraits/women/32.jpg'),
 ('Magic-Gigi','Magri','Gisele','0621452145','gigi_magri@hotmail.fr','$2y$10$yMOnyOZWJC9DsywvNwkAtOfBGdGKelu0B2kd5r1myt/gqMsXucJEC','https://st.depositphotos.com/1594308/3527/i/950/depositphotos_35274703-stock-photo-aged-woman.jpg'),
 ('Arthur03','Pelissier','Arthur','0798877445','apelissier03@oitlook.com','$2y$10$Z48dA.GGBuJl6ljVEnSrM.iE2TyQbQrgdfj61wE5.XzWKYXpQ8OIq','https://randomuser.me/api/portraits/men/28.jpg'),
 ('HermioneG','Leblanc','Eva','0685236547','leblanc-eva@hotmail.fr','$2y$10$0I4I11OyL6HPnfxUfEJBOuWhNvZRI50eeA5fqYTKlvPiEoauMTSDC','https://randomuser.me/api/portraits/women/60.jpg'),
@@ -20,7 +20,7 @@ INSERT INTO "user"(pseudo,lastname,firstname,phone,mail,password,avatar) VALUES
 ('Jadounette','Servan','Jade','0662206325','jadelilly2010@icloud.com','$2y$10$veibov4rX2DCE.rgRqoESO.U1FwH84BjSvHegDlLshM1TS9jlEEHS','https://randomuser.me/api/portraits/women/84.jpg'),
 ('TinySweet','Duboz','Stéphanie','0687464125','tiny.sweet75@yahoo.fr','$2y$10$8SAHOMP1nrARmauQy25gteiN6Iu.80H4rdsxbglwS34Wms0aAH7va','https://randomuser.me/api/portraits/women/41.jpg'),
 ('FlowerPower','Lemaire','Océane','0706065285','oceane.lemaire16@gmail.com','$2y$10$nQ5vGTJsip7ScUUywzjlDudxBs1z0hDc2GdLWyY9zEzCk2vTAXU7G','https://randomuser.me/api/portraits/women/64.jpg'),
-('Supersonic','Dumas','Raphael','0698120546','raphael.dumas34@gmail.com','$2y$10$1k4bRdgSVtIOC3RJBJnfFOGoRvXkyOwf0daPAug7QXEAjMeI/TDV.','https://randomuser.me/api/portraits/men/38.jpg'),
+('Supersonic','Dumas','Raphael','0698120546','raphael.dumas34@gmail.com','$2y$10$9kGFjf7zu8Zbg939.5e9dOrGF6nD1cYSNRnXCURlLuZFWoFa1URAW','https://randomuser.me/api/portraits/men/38.jpg'),
 ('TeamAurelien','Meunier','Aurelien','0611347008','au.meunier75@hotmail.fr','$2y$10$6ltOt8nn3m4JfdGREhvGAev4HZ3h.qEkYYg8HCK.hFlqXrX1rUclG','https://randomuser.me/api/portraits/lego/7.jpg'),
 ('Louloute13','Degrise','Sophie','0661196226','sdegrise@gmail.com','$2y$10$Q0SVwFJRD48aVD1b70SvQeTtTm2JfN1KSWVnE/7xP2vTLZmyrnlQu','https://randomuser.me/api/portraits/women/23.jpg'),
 ('Nanou69','Matthieu','Nathalie','0644054532','nathalie.mat@icloud.com','$2y$10$gwQVimNiPqDYv5QzOw4vEOcNf8REj4Vvx2jntItIWmxaCxYZIcCWq','https://randomuser.me/api/portraits/women/14.jpg');
