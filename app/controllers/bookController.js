@@ -76,7 +76,7 @@ const bookController = {
     stateAction : async function (req,res) {
         try{
         // Get the id and the status in the request body
-        const {id,statusId} = req.body
+        const {id,statusId} = req.params
 
         // Verify if the status isn't already the same
         const bookingDb = await Booking.findById(id);
