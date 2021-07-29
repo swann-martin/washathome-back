@@ -20,5 +20,5 @@ FROM
 	"user"
  JOIN machine ON "user".id=machine.user_id 
  JOIN availibility ON machine.id = availibility.machine_id
-WHERE "user".id=3
-GROUP BY ("user".id,machine.id, availibility.id);
+WHERE "user".id= $
+GROUP BY ("user".id,machine.id);
