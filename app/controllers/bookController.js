@@ -84,7 +84,7 @@ const bookController = {
         
         // Send error if the token doesn't correspond to the right user
         if (!(bookingDb[0].bringer_id == req.user.id || bookingDb[0].washer_id == req.user.id)){
-            throw new Error( "Error. You tried to book from another user." )
+            throw new Error( "Error. You tried to change the state of another user's booking." )
         }
         
         // Instance the active record class and call the change state function

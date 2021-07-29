@@ -52,7 +52,7 @@ const mainController = {
             const {userId,capacity,name,description,zipCode,address,city,latitude,longitude,price} = req.body
 
             // Send error if the token doesn't correspond to the right user
-              if (!(userId == req.user.id)){throw new Error( "Error. You tried to delete another user." )}
+            if (!(userId == req.user.id)){throw new Error( "Error. You tried to delete another user." )}
 
             // Create a instance of Machine class with the data from the body request form
             const newMachine = new Machine ({
