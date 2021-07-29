@@ -1,8 +1,9 @@
 
-BOOKING ( id, status, temperature, price, #user_id)
+BOOKING ( id, temperature,time_resa, #user_id, #machine_id, #status_id)
 USER( id, pseudo, firstname, lastname, phone_number, mail, password, avatar)
-MACHINE( id, capacity, name, description, zip, address, city, price, #user_id, photo)
-AVAILABILITY ( id, date, booked, #machine_id )
+MACHINE( id, capacity, name, description, zip, address, city, latitude, longitude price,photo, #user_id)
+AVAILABILITY ( id,open_hour , end_hour, booked, #machine_id )
 OPTION(id, name, price)
+STATUS (id,label)
 INCLUDE(#reservation_id, #option_id)
 ANCILLARY (#option_id, #machine_id)
