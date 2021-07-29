@@ -18,7 +18,7 @@ SELECT
 	)) machine
 FROM 
 	"user"
- JOIN machine ON "user".id=machine.user_id 
- JOIN availibility ON machine.id = availibility.machine_id
+FULL OUTER JOIN machine ON "user".id=machine.user_id 
+FULL OUTER JOIN availibility ON machine.id = availibility.machine_id
 WHERE "user".id= $
 GROUP BY ("user".id,machine.id);
