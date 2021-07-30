@@ -39,7 +39,8 @@ CREATE TABLE machine (
 CREATE TABLE booking (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     temperature INT NOT NULL,
-    time_resa TIMESTAMPTZ ,
+    --time_resa TIMESTAMPTZ ,
+    dispo TEXT,
     bringer_id INT REFERENCES "user"(id),
     washer_id INT REFERENCES "user"(id),
     machine_id INT REFERENCES machine(id),
@@ -48,13 +49,13 @@ CREATE TABLE booking (
 
 
 
-CREATE TABLE availibility (
+/*CREATE TABLE availibility (
   id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
   open_hour TIMESTAMPTZ,
   end_hour TIMESTAMPTZ,
   booked BOOLEAN,
   machine_id INT REFERENCES machine(id)
-);
+);*/
 
 CREATE TABLE option (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
