@@ -4,7 +4,7 @@ const mainController = require('./controllers/mainController');
 const authController = require('./controllers/authController');
 const bookController = require('./controllers/bookController');
 const authMiddleware = require('./middleware/authMiddleware')
-const geocoding = require('./middleware/geocoding')
+const geocodingZipCode = require('./middleware/geocodingZipCode')
 
 // Declarations
 const router = express.Router();
@@ -15,10 +15,11 @@ const router = express.Router();
 router.get('/search/:zipCode',mainController.getByZipCode); // Search all the machines by zip code in the dynamic URL
 router.get('/searchall',mainController.getAll); // Send all the machines
 router.get('/machine/:id',mainController.getById); // Search all the machines by the id in the dynamic URL
-router.post('/machine',authMiddleware,geocoding,mainController.submitAction); // Add a new machine
+router.post('/machine',authMiddleware,geocodingZipCode,mainController.submitAction); // Add a new machine
 router.delete('/machine/:id',authMiddleware,mainController.deleteAction); // Delete a machine
 // CRUD users
 router.post('/login',authController.loginAction); // Login route
+router.get('/autologin',authMiddleware,authController.autoLogin); // Auto login route
 router.post('/signup',authController.signupAction); // Signup route
 router.delete('/account/:pseudo',authMiddleware,authController.deleteAction); // Delete an user
 // CRUD reservations
