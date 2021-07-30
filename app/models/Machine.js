@@ -32,7 +32,11 @@ class Machine {
 
     // Find by zip code method
     static async findByZipCode (zipCode) {
-        const { rows } = await db.query('SELECT * FROM machine WHERE zip_code = $1;' , [zipCode]);
+        const { rows } = await db.query(`SELECT machine.*, ARRAY_AGG(availibility.*) as machine_availability
+        FROM machine
+        full outer JOIN availibility on machine.id = availibility.machine_id
+        WHERE machine.zip_code = $1
+        GROUP BY machine.id;` , [zipCode]);
 
         return rows.map(row => new Machine(row));
     }

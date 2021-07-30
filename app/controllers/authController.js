@@ -16,9 +16,7 @@ const authController = {
         const user = await User.findByMail(req.body.mail);
 
         // Get the user's machines and bookings to join in the response
-        const machines = await Machine.findByUserId(user[0].id)
-        const washerBookings = await Booking.findByWasherId(user[0].id)
-        const bringerBookings = await Booking.findByBringerId(user[0].id)
+        const join = await User.findByIdJoin(user[0].id)
 
         // Check email existence
         if(!user[0]){
@@ -43,16 +41,30 @@ const authController = {
         // Send the response with connection status, user's id, token and message
         return res.status(200).json({
                                       isConnected : true,
-                                      user: user[0],
                                       token : token,
-                                      machines,
-                                      washerBookings,
-                                      bringerBookings
+                                      personal : join
                                     })
         }
         catch(error){
           return res.status(400).json({ message: error.message });
         }
+  },
+
+  // Login method
+  autoLogin : async function (req,res) {
+    try{
+    // Get the user's machines and bookings to join in the response
+    const join = await User.findByIdJoin(req.user.id)
+
+    // Send the response with connection status, user's id, token and message
+    return res.status(200).json({
+                                  isConnected : true,
+                                  user : join
+                                })
+    }
+    catch(error){
+      return res.status(400).json({ message: error.message });
+    }
   },
 
   // Signup action method
