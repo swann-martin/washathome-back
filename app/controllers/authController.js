@@ -16,9 +16,7 @@ const authController = {
         const user = await User.findByMail(req.body.mail);
 
         // Get the user's machines and bookings to join in the response
-        const machines = await Machine.findByUserId(user[0].id)
-        const washerBookings = await Booking.findByWasherId(user[0].id)
-        const bringerBookings = await Booking.findByBringerId(user[0].id)
+        const join = await User.findByIdJoin(user[0].id)
 
         // Check email existence
         if(!user[0]){
@@ -45,9 +43,7 @@ const authController = {
                                       isConnected : true,
                                       user: user[0],
                                       token : token,
-                                      machines,
-                                      washerBookings,
-                                      bringerBookings
+                                      personnal : join
                                     })
         }
         catch(error){
