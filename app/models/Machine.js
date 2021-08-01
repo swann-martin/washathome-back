@@ -18,11 +18,7 @@ class Machine {
 
     // Find one method
     static async findById(id) {
-        const { rows } = await db.query(`SELECT machine.*, ARRAY_AGG(availibility.*) as machine_availability
-        FROM machine
-        full outer JOIN availibility on machine.id = availibility.machine_id
-        WHERE machine.id = $1
-        GROUP BY machine.id;`, [id]);
+        const { rows } = await db.query(`SELECT * FROM machine WHERE id = $1`, [id]);
         
         return rows.map(row => new Machine(row));
     }
@@ -36,11 +32,7 @@ class Machine {
 
     // Find by zip code method
     static async findByZipCode (zipCode) {
-        const { rows } = await db.query(`SELECT machine.*, ARRAY_AGG(availibility.*) as machine_availability
-        FROM machine
-        full outer JOIN availibility on machine.id = availibility.machine_id
-        WHERE machine.zip_code = $1
-        GROUP BY machine.id;` , [zipCode]);
+        const { rows } = await db.query(`SELECT * FROM machine WHERE zip_code =$1` , [zipCode]);
 
         return rows.map(row => new Machine(row));
     }
