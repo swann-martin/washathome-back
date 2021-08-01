@@ -47,7 +47,7 @@ INSERT INTO machine (capacity,name,description,zip_code,address,city,latitude,lo
 (6,'Chez Sophie','en congés maternité je suis disponible pour chouchouter votre linge','13007','6 bd Bompard','marseille',43.278708,5.360459,7,'https://st3.depositphotos.com/thumbs/12985848/image/18407/184077202/api_thumb_450.jpg',19),
 (7,'Fee du logis','maison non fumeur avec une  machine recente. Le travaille sera soigné vous ne serez pas déçu','69009','50 rue Marietton','lyon',45.775754,480842,7,'https://st.depositphotos.com/thumbs/1247468/image/2230/22308835/api_thumb_450.jpg',20);
 
-INSERT INTO booking (temperature,time_resa,bringer_id,washer_id,machine_id,status_id) VALUES
+INSERT INTO booking (temperature,dispo,bringer_id,washer_id,machine_id,status_id) VALUES
 
 (30,'2021-09-05 09:00:00',8,19,10,1),
 (40,'2021-09-08 12:00:00',4,5,5,3),
@@ -70,7 +70,7 @@ INSERT INTO booking (temperature,time_resa,bringer_id,washer_id,machine_id,statu
 
 
 
-INSERT INTO availibility(open_hour,end_hour,booked,machine_id) VALUES
+/*INSERT INTO availibility(open_hour,end_hour,booked,machine_id) VALUES
 
 ('2021-09-05 08:00:00','2021-09-05 12:00:00','false',2),
 ('2021-09-06 08:00:00','2021-09-06 12:00:00','false',2),
@@ -87,7 +87,7 @@ INSERT INTO availibility(open_hour,end_hour,booked,machine_id) VALUES
 ('2021-09-05 14:00:00','2021-09-05 18:00:00','false',1),
 ('2021-09-07 08:00:00','2021-09-07 12:00:00','false',7),
 ('2021-09-06 12:00:00','2021-09-06 15:00:00','false',7),
-('2021-09-06 16:00:00','2021-09-06 17:00:00','true',4);
+('2021-09-06 16:00:00','2021-09-06 17:00:00','true',4);*/
 
 
 
