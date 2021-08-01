@@ -1,7 +1,5 @@
 // Imports
 const User = require('../models/User');
-const Machine = require('../models/Machine');
-const Booking = require('../models/Booking');
 const jwt = require ('jsonwebtoken');
 const bcrypt = require('bcryptjs')
 
@@ -16,9 +14,7 @@ const authController = {
         const user = await User.findByMail(req.body.mail);
 
         // Get the user's machines and bookings to join in the response
-        const machines = await Machine.findByUserId(user[0].id)
-        const washerBookings = await Booking.findByWasherId(user[0].id)
-        const bringerBookings = await Booking.findByBringerId(user[0].id)
+        const join = await User.findByIdJoin(user[0].id)
 
         // Check email existence
         if(!user[0]){
@@ -43,11 +39,8 @@ const authController = {
         // Send the response with connection status, user's id, token and message
         return res.status(200).json({
                                       isConnected : true,
-                                      user: user[0],
                                       token : token,
-                                      machines,
-                                      washerBookings,
-                                      bringerBookings
+                                      personal : join
                                     })
         }
         catch(error){
@@ -55,13 +48,30 @@ const authController = {
         }
   },
 
+  // Login method
+  autoLogin : async function (req,res) {
+    try{
+    // Get the user's machines and bookings to join in the response
+    const join = await User.findByIdJoin(req.user.id)
+
+    // Send the response with connection status, user's id, token and message
+    return res.status(200).json({
+                                  isConnected : true,
+                                  user : join
+                                })
+    }
+    catch(error){
+      return res.status(400).json({ message: error.message });
+    }
+  },
+
   // Signup action method
   signupAction : async function(req,res) {
-
-    // Destructure the request body
-    const {pseudo,firstname,lastname,phone,mail,password,passwordConfirm} = req.body
     
     try{
+      // Destructure the request body
+      const {pseudo,firstname,lastname,phone,mail,password,passwordConfirm} = req.body
+    
       // Verify pseudo inexistance in database
       const pseudoDb = await User.findByPseudo(pseudo);
       if(pseudoDb[0]){throw new Error( 'Error. Pseudo already exists.' )}
@@ -115,12 +125,41 @@ const authController = {
     }
   },
 
+  passUpdate : async function (req,res) {
+
+    try{
+      // Destructure the request
+      const {id} = req.user
+      const {password,passwordConfirm} = req.body
+
+      // Check password confirmation concordance
+      if(password != passwordConfirm){throw new Error( 'Error. Password confirmation is wrong.' )}
+
+      // Hash it
+      const hashedPassword = bcrypt.hashSync(password, 10);
+
+      const newPassword = new User ({
+        id:id,
+        password:hashedPassword
+      });
+
+      // Update the password
+      await newPassword.updatePassword();
+
+      // Send confirmation message
+      return res.status(201).json({ message : 'Signup succeeded ! Your account have been created.' })
+    }
+    catch(error){
+      return res.status(400).json({ message: error.message });    
+    }
+  },
+
   // Delete an user method
   deleteAction : async function (req,res) {
 
     try{
       // Get the user from the database for verification
-      const user = await User.findByPseudo(req.params.pseudo);
+      const user = await User.findByPseudo(req.user.pseudo);
 
       // Send error if the user doesn't exist
       if (!user[0]){throw new Error( "Error. This account doesn't exists." )}

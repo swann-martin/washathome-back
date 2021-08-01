@@ -1,5 +1,6 @@
 // Imports
 const Machine = require('../models/Machine')
+const User = require('../models/User')
 
 // Controller main object
 const mainController = {
@@ -17,11 +18,13 @@ const mainController = {
     // Get one machine bu its id method
     getById: async function (req,res) {
         try{
-            const results = await Machine.findById(req.params.id);
-
-            if(!results[0]){throw new Error( "Error. There is no machine with this id." )}
+            const machine = await Machine.findById(req.params.id);
+            console.log(machine[0].user_id);
+            const user = await User.findById(machine[0].user_id);
+            console.log(user[0].pseudo);
+            if(!machine[0]){throw new Error( "Error. There is no machine with this id." )}
         
-            res.json(results);
+            res.json({machine:machine[0],user:{id:user[0].id, pseudo: user[0].pseudo}});
         }
         catch(error){
             return res.status(400).json({ message: error.message });
