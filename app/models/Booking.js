@@ -93,7 +93,7 @@ class Booking {
     JOIN status ON booking.status_id = status.id
     FULL OUTER JOIN "include" ON booking.id = "include".booking_id
     FULL OUTER JOIN "option" ON "option".id = "include".option_id
-    WHERE u.id = $1
+    WHERE u.id = $
     GROUP BY (u.id, b.id, booking.id,machine.id,status.id,"option".id);`, [id]);
         
         return rows.map(row => new Booking(row));
