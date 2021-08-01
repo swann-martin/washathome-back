@@ -147,7 +147,7 @@ const authController = {
       await newPassword.updatePassword();
 
       // Send confirmation message
-      return res.status(201).json({ message : 'Signup succeeded ! Your account have been created.' })
+      return res.status(201).json({ message : 'Signup succeeded ! Your password have been changed.' })
     }
     catch(error){
       return res.status(400).json({ message: error.message });    
