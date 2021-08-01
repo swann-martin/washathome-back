@@ -10,10 +10,10 @@ class User {
     }
 
     // Find one method
-    static async findOne(id) {
+    static async findById(id) {
         const { rows } = await db.query('SELECT * FROM "user" WHERE id = $1;', [id]);
 
-        return new User(rows[0]);
+        return rows.map(row => new User(row));
     }
 
     // Find all method
@@ -82,7 +82,8 @@ class User {
                     UPDATE "user" SET
                     pseudo = $1, firstname = $2,
                     lastname = $3, phone = $4,
-                    mail = $5, password = $6, avatar = $7;
+                    mail = $5, password = $6,
+                    avatar = $7 WHERE id = $8 RETURNING *;
                 `, [
                     this.pseudo, this.firstname,
                     this.lastname, this.phone,
@@ -101,10 +102,21 @@ class User {
                 this.avatar
             ]);
             this.id = rows[0].id;
-
-            // return the id of the user
-            return rows.map(row => new User(row));
         }
+    }
+
+    // Update password method
+    async updatePassword () {
+
+        const {rows} = await db.query(`
+                UPDATE "user" SET password = $1 
+                WHERE id = $2 RETURNING *;
+            `, [this.password,this.id]
+        );
+        this.id = rows[0].id;
+
+        // return the id of the user
+        return rows.map(row => new User(row));
     }
 
     // Delete row method

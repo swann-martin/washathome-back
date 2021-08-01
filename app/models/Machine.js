@@ -18,7 +18,11 @@ class Machine {
 
     // Find one method
     static async findById(id) {
-        const { rows } = await db.query('SELECT * FROM machine WHERE id = $1;', [id]);
+        const { rows } = await db.query(`SELECT machine.*, ARRAY_AGG(availibility.*) as machine_availability
+        FROM machine
+        full outer JOIN availibility on machine.id = availibility.machine_id
+        WHERE machine.id = $1
+        GROUP BY machine.id;`, [id]);
         
         return rows.map(row => new Machine(row));
     }

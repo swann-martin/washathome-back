@@ -1,7 +1,5 @@
 // Imports
 const User = require('../models/User');
-const Machine = require('../models/Machine');
-const Booking = require('../models/Booking');
 const jwt = require ('jsonwebtoken');
 const bcrypt = require('bcryptjs')
 
@@ -69,11 +67,11 @@ const authController = {
 
   // Signup action method
   signupAction : async function(req,res) {
-
-    // Destructure the request body
-    const {pseudo,firstname,lastname,phone,mail,password,passwordConfirm} = req.body
     
     try{
+      // Destructure the request body
+      const {pseudo,firstname,lastname,phone,mail,password,passwordConfirm} = req.body
+    
       // Verify pseudo inexistance in database
       const pseudoDb = await User.findByPseudo(pseudo);
       if(pseudoDb[0]){throw new Error( 'Error. Pseudo already exists.' )}
@@ -127,12 +125,41 @@ const authController = {
     }
   },
 
+  passUpdate : async function (req,res) {
+
+    try{
+      // Destructure the request
+      const {id} = req.user
+      const {password,passwordConfirm} = req.body
+
+      // Check password confirmation concordance
+      if(password != passwordConfirm){throw new Error( 'Error. Password confirmation is wrong.' )}
+
+      // Hash it
+      const hashedPassword = bcrypt.hashSync(password, 10);
+
+      const newPassword = new User ({
+        id:id,
+        password:hashedPassword
+      });
+
+      // Update the password
+      await newPassword.updatePassword();
+
+      // Send confirmation message
+      return res.status(201).json({ message : 'Signup succeeded ! Your account have been created.' })
+    }
+    catch(error){
+      return res.status(400).json({ message: error.message });    
+    }
+  },
+
   // Delete an user method
   deleteAction : async function (req,res) {
 
     try{
       // Get the user from the database for verification
-      const user = await User.findByPseudo(req.params.pseudo);
+      const user = await User.findByPseudo(req.user.pseudo);
 
       // Send error if the user doesn't exist
       if (!user[0]){throw new Error( "Error. This account doesn't exists." )}
