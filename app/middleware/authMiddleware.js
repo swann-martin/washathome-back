@@ -9,7 +9,7 @@ module.exports = function (req,res,next){
     if (!authorization) {throw new Error("Error. No authorization property in the request header" )}
 
     // Keep the first part of the token in the header
-    const token = req.headers.authorization.split(' ')[0]
+    const token = authorization.split(' ')[0]
 
     // Check token existence
     if (token == null) {throw new Error("Error. There is no token in the authorization header" )}
