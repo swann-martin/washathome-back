@@ -86,7 +86,7 @@ const authController = {
       if(password != passwordConfirm){throw new Error( 'Error. Password confirmation is wrong.' )}
       
       // Hash the password
-      const hashedPassword = bcrypt.hashSync(password, 10);
+      const hashedPassword = await bcrypt.hashSync(password, 10);
 
       // Create a instance of User class with the data from the body request form
       const newUser = new User ({
