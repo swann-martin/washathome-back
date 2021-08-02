@@ -18,7 +18,7 @@ const authController = {
 
         // Check email existence
         if(!user[0]){
-         throw new Error( "Error. This email doesn't exists" )
+         throw new Error( "Error. This email doesn't exist." )
         }
 
         // Compare bcrypt hash concordance with bcryptjs
