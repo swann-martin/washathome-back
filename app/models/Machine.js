@@ -51,7 +51,7 @@ class Machine {
             description = $3, zip_code = $4,
             address = $5, city = $6, latitude = $7, longitude = $8,
             price = $9, picture = $10, user_id = $11 
-            WHERE id = $12;
+            WHERE id = $12 RETURNING *;
             `, [
                 this.capacity, this.name,
                 this.description, this.zipCode,
