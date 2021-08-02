@@ -70,7 +70,7 @@ const authController = {
     
     try{
       // Destructure the request body
-      const {pseudo,firstname,lastname,phone,mail,password,passwordConfirm} = req.body
+      const {pseudo,firstname,lastname,phone,mail,password,passwordConfirm,avatar} = req.body
     
       // Verify pseudo inexistance in database
       const pseudoDb = await User.findByPseudo(pseudo);
@@ -97,7 +97,7 @@ const authController = {
         phone:phone,
         mail:mail,
         password:hashedPassword,
-        avatar:"https://thispersondoesnotexist.com/"
+        avatar:avatar
       })
 
       // Saving the new user class instanced ith all the data in the database

@@ -105,12 +105,12 @@ class Booking {
             // si l'instance a un id, opère une mise à jour
             await db.query(`
                     UPDATE booking SET
-                    temperature = $1, time_resa = $2,
+                    temperature = $1, dispo = $2,
                     bringer_id = $3, washer_id = $4,
                     machine_id = $5, status_id = $6,
                     WHERE id = $7;
                 `, [
-                    this.temperature, this.timeResa,
+                    this.temperature, this.dispo,
                     this.bringerId, this.washerId,
                     this.machineId, this.statusId,
                     this.id
@@ -118,10 +118,10 @@ class Booking {
             );
         } else {
             const { rows } = await db.query(`
-                INSERT INTO booking (temperature, time_resa, bringer_id, washer_id, machine_id, status_id)
+                INSERT INTO booking (temperature, dispo, bringer_id, washer_id, machine_id, status_id)
                 VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;
             `, [
-                this.temperature, this.timeResa,
+                this.temperature, this.dispo,
                 this.bringerId, this.washerId,
                 this.machineId, this.statusId
             ]);
