@@ -209,7 +209,7 @@ const authController = {
       const user = await User.findByPseudo(req.user.pseudo);
 
       // Send error if the user doesn't exist
-      if (!user[0]){throw new Error( "Error. This account doesn't exists." )}
+      if (!user[0]){throw new Error( "Error. This account doesn't exist." )}
 
       // Send error if the token doesn't correspond to the right user
       if (user[0].pseudo != req.user.pseudo){throw new Error( "Error. You tried to delete another user." )}
