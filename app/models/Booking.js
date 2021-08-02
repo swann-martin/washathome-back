@@ -29,8 +29,8 @@ class Booking {
     // Find by bringer method
     static async findByBringerId(id) {
         const { rows } = await db.query(`SELECT
-    json_build_object('washer_id', u .id, 'washer_pseudo', u. pseudo, 'washer_phone', u. phone, 'washer_mail', u .mail) washer,
-    json_build_object('bringer_id', b.id, 'bringer_pseudo', b.pseudo) bringer,
+    json_build_object('id', u .id, 'pseudo', u. pseudo, 'phone', u. phone, 'mail', u .mail) washer,
+    json_build_object('id', b.id, 'pseudo', b.pseudo) bringer,
     json_build_object(
         'idResa', booking.id,
         'dispo', booking.dispo,
@@ -42,13 +42,13 @@ class Booking {
         'options',ARRAY_AGG ("option".id || '   ' || "option".name || '   ' || "option".price)
     ) resa ,
     json_build_object(
-        'machine_id', machine.id,
-        'machine_name', machine.name,
-        'machine_address',machine.address,
-        'machine_zip_code',machine.zip_code,
-        'machine_city',machine.city,
-        'machine_latitude',machine.latitude,
-        'machine_longitude',machine.longitude
+        'id', machine.id,
+        'name', machine.name,
+        'address',machine.address,
+        'zip_code',machine.zip_code,
+        'city',machine.city,
+        'latitude',machine.latitude,
+        'longitude',machine.longitude
     ) machine
 FROM
     "user" b
@@ -69,8 +69,8 @@ GROUP BY (u.id, b.id, booking.id,machine.id,status.id,"option".id);`, [id]);
     static async findByWasherId(id) {
 
         const { rows } = await db.query(`SELECT 
-                                        json_build_object('washer_id', u.id, 'washer_pseudo', u.pseudo, 'washer_phone', u.phone, 'washer_mail', u.mail) washer,
-                                        json_build_object('bringer_id', b .id, 'bringer_pseudo', b .pseudo) bringer,
+                                        json_build_object('id', u.id, 'pseudo', u.pseudo, 'phone', u.phone, 'mail', u.mail) washer,
+                                        json_build_object('id', b .id, 'pseudo', b .pseudo) bringer,
                                         json_build_object(
                                           'idResa', booking.id, 
                                           'dispo', booking.dispo,
@@ -82,13 +82,13 @@ GROUP BY (u.id, b.id, booking.id,machine.id,status.id,"option".id);`, [id]);
                                           'options',ARRAY_AGG ("option".id || '   ' || "option".name || '   ' || "option".price)
                                         ) resa ,
                                         json_build_object(
-                                          'machine_id', machine.id,
-                                          'machine_name', machine.name,
-                                          'machine_address',machine.address,
-                                          'machine_zip_code',machine.zip_code,
-                                          'machine_city',machine.city,
-                                          'machine_latitude',machine.latitude,
-                                          'machine_longitude',machine.longitude
+                                          'id', machine.id,
+                                          'name', machine.name,
+                                          'address',machine.address,
+                                          'zip_code',machine.zip_code,
+                                          'city',machine.city,
+                                          'latitude',machine.latitude,
+                                          'longitude',machine.longitude
                                         ) machine
                                         FROM 
                                         "user" u
