@@ -26,7 +26,7 @@ router.patch('/account',authMiddleware,authController.updateAction); // Modify a
 router.delete('/account',authMiddleware,authController.deleteAction); // Delete an user
 router.patch('/password',authMiddleware,authController.passUpdate) // Update the password
 // CRUD reservations
-router.get('/reservation/:userId',bookController.getByUser); // Send all the reservations by user id
+router.get('/reservation',authMiddleware,bookController.getByUser); // Send all the reservations by user id
 router.post('/reservation',authMiddleware,bookController.submitAction); // Add a new reservation
 router.get('/reservation/:id/:statusId',authMiddleware,bookController.stateAction); // Change the state of a reservation
 router.delete('/reservation/:id',authMiddleware,bookController.deleteAction); // Delete a reservation

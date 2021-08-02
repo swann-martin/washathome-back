@@ -15,10 +15,10 @@ const bookController = {
     getByUser: async function (req,res) {
         try {
             // Get the bookings by the washer id
-            const washerBookings = await Booking.findByWasherId(req.params.userId);
+            const washerBookings = await Booking.findByWasherId(req.user.id);
 
             // Get the bookings by the bringer id
-            const bringerBookings = await Booking.findByBringerId(req.params.userId);
+            const bringerBookings = await Booking.findByBringerId(req.user.id);
 
             // Delete the personnal information of the washer according to the status of the booking
             bringerBookings.forEach(element=>{  if( element.resa.status_id == 1 || element.resa.status_id == 5 || element.resa.status_id == 6 ){
