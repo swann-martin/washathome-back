@@ -130,9 +130,6 @@ const authController = {
       // Destructure the request
       const {id} = req.user
       const {pseudo,firstname,lastname,phone,mail,avatar} = req.body
-      
-      // Hash the password
-      const hashedPassword = await bcrypt.hashSync(password, 10);
 
       // Create a instance of User class with the data from the body request form
       const newUser = new User ({
@@ -158,11 +155,7 @@ const authController = {
       )
       
       // Send confirmation message
-      return res.status(201).json({ message : 'Patch succeeded ! Your account have been modified.',
-                                    isConnected : true,
-                                    user : userDb[0].id,
-                                    pseudo : userDb[0].pseudo,
-                                    token:token })
+      return res.status(201).json({ message : 'Patch succeeded ! Your account have been modified.', token:token })
     }  
     catch(error){
       return res.status(400).json({ message: error.message });
