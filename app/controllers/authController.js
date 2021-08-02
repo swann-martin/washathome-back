@@ -22,7 +22,7 @@ const authController = {
         const join = await User.findByIdJoin(user[0].id)
 
         // Compare bcrypt hash concordance with bcryptjs
-        const check = bcrypt.compareSync(req.body.password,user[0].password);
+        const check = await bcrypt.compareSync(req.body.password,user[0].password);
         if (check===false){
           throw new Error( "Error. Wrong password" )
         }
