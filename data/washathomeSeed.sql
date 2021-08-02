@@ -49,21 +49,21 @@ INSERT INTO machine (capacity,name,description,zip_code,address,city,latitude,lo
 
 INSERT INTO booking (temperature,dispo,bringer_id,washer_id,machine_id,status_id) VALUES
 
-(30,'2021-09-05 09:00:00',8,19,10,1),
-(40,'2021-09-08 12:00:00',4,5,5,3),
-(60,'2021-09-05 11:00:00',14,20,11,2),
-(20,'2021-09-05 08:00:00',3,4,4,4),
-(30,'2021-09-06 20:00:00',6,12,8,5),
-(30,'2021-09-06 14:00:00',7,19,10,6),
-(40,'2021-09-10 13:00:00',7,5,5,1),
-(60,'2021-09-05 15:00:00',11,13,6,3),
-(30,'2021-09-06 14:00:00',4,1,1,2),
-(40,'2021-09-05 10:00:00',17,2,2,4),
-(60,'2021-09-07 13:00:00',3,15,9,5),
-(20,'2021-09-06 08:00:00',8,10,3,6),
-(20,'2021-09-06 11:00:00',6,16,7,3),
-(20,'2021-09-08 08:30:00',18,19,10,1),
-(20,'2021-09-05 14:30:00',9,20,11,4);
+(30,'dispo tous les jours de 14h00 à 18h00',8,19,10,1),
+(40,'dispo le mardi toute la journée',4,5,5,3),
+(60,'dispo tous les matins de 09h00 à 13h00',14,20,11,2),
+(20,'dispo le mercredi de 09h00 à 20h00',3,4,4,4),
+(30,'dispo les mardis ,jeudis toute la journée',6,12,8,5),
+(30,'dispo tous les jours de 14h00a à 18h00',7,19,10,6),
+(40,'dispo le mardi toute la journée',7,5,5,1),
+(60,'dispo tous les matins de 08h00 à 12h00',11,13,6,3),
+(30,'dispo de 09h à 16h30 du lundi au vendredi',4,1,1,2),
+(40,'dispo tous les aprés midi de la semaine',17,2,2,4),
+(60,'dispo de 09h à 11h00 et de 17h30 à 20h00',3,15,9,5),
+(20,'dispo le mardi de 11h00 à 16h00 et de 19h00 à 21h00',8,10,3,6),
+(20,'dispo tous les joours sauf dimanche',6,16,7,3),
+(20,'dispo tous les jours de 14h00a à 18h00',18,19,10,1),
+(20,'dispo tous les matins de 09h00 à 13h00',9,20,11,4);
 
 
 
