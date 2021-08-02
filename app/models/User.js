@@ -101,6 +101,9 @@ class User {
                 this.avatar
             ]);
             this.id = rows[0].id;
+
+            // return the id of the user
+            return rows.map(row => new User(row));
         }
     }
 

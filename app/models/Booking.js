@@ -30,7 +30,7 @@ class Booking {
         json_build_object('bringer_id', b.id, 'bringer_pseudo', b.pseudo) bringer,
         json_build_object(
             'idResa', booking.id,
-            'DateResa', To_char(booking.time_resa, 'HH24:MI - DD/MM/YYYY'),
+            'dispo', booking.dispo,
             'tempResa', booking.temperature,
             'washer_id', u .id ,
             'bringer_id', b.id,
@@ -55,7 +55,7 @@ class Booking {
     JOIN status ON booking.status_id = status.id
     FULL OUTER JOIN "include" ON booking.id = "include".booking_id
     FULL OUTER JOIN "option" ON "option".id = "include".option_id
-    WHERE b.id = $1
+    WHERE b.id = $
     GROUP BY (u.id, b.id, booking.id,machine.id,status.id,"option".id);`, [id]);
         
         return rows.map(row => new Booking(row));
@@ -68,7 +68,7 @@ class Booking {
         json_build_object('bringer_id', b .id, 'bringer_pseudo', b .pseudo) bringer,
         json_build_object(
             'idResa', booking.id, 
-            'DateResa', To_char(booking.time_resa, 'HH24:MI - DD/MM/YYYY'), 
+            'dispo', booking.dispo,
             'tempResa', booking.temperature, 
             'washer_id', u.id , 
             'bringer_id', b .id, 
