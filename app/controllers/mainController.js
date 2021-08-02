@@ -52,14 +52,14 @@ const mainController = {
     submitAction : async function(req,res) {
         try{
             // Destructure the request body
-            const {capacity,title,description,zipCode,address,city,latitude,longitude,price} = req.body
+            const {capacity,title,description,zip_code,address,city,latitude,longitude,price} = req.body
 
             // Create a instance of Machine class with the data from the body request form
             const newMachine = new Machine ({
             capacity:capacity,
             name:title,
             description:description,
-            zipCode:zipCode,
+            zipCode:zip_code,
             address:address,
             city:city,
             latitude:latitude,
