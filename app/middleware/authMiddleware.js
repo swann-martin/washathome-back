@@ -10,14 +10,8 @@ module.exports = function (req,res,next){
     //Check authorization existence
     if (!authorization) {throw new Error("Error. No authorization property in the request header" )}
 
-    // Keep the first part of the token in the header
-    const token = authorization.split(' ')[0]
-
-    // Check token existence
-    if (token == null) {throw new Error("Error. There is no token in the authorization header" )}
-
     // Verify concordance with passphrase
-    jwt.verify(token,'TOKEN_SECRET', (err, user) => {
+    jwt.verify(authorization,'TOKEN_SECRET', (err, user) => {
       console.log(err)
       if (err) {throw new Error( "Error. Wrong token" )}
       req.user = user
