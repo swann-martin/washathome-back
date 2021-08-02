@@ -52,7 +52,6 @@ class User {
     // Find by mail and send machines method
     static async findByIdJoin (mail) {
 
-        // return the id of the user
         const {rows} = await db.query(`SELECT 
                                         json_build_object('user_id', "user".id, 'user_pseudo', "user".pseudo,'user_lastname',"user".lastname,'user_firstname', "user".firstname,'user_phone',"user".phone,'user_mail',"user".mail,'user_avatar',"user".avatar,'user_password',"user".password)"user",
                                         json_build_object(
