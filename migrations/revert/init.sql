@@ -5,7 +5,7 @@ BEGIN;
 -- delation of tables
 DROP TABLE include;
 DROP TABLE ancillary;
-DROP TABLE availibility;
+--DROP TABLE availibility;
 DROP TABLE option;
 DROP TABLE booking;
 DROP TABLE "status";
