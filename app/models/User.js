@@ -60,7 +60,7 @@ class User {
                                         FROM 
                                             "user"
                                         FULL OUTER JOIN machine ON "user".id=machine.user_id 
-                                        WHERE "user".id= $
+                                        WHERE "user".id= 1$
                                         GROUP BY ("user".id,machine.id);   
     ` , [mail]);
         return rows.map(row => new User(row));
