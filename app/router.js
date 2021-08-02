@@ -6,7 +6,7 @@ const bookController = require('./controllers/bookController');
 const authMiddleware = require('./middleware/authMiddleware')
 const geocodingZipCode = require('./middleware/geocodingZipCode')
 
-// Declarations
+// Router declaration
 const router = express.Router();
 
 // Routes
@@ -21,6 +21,7 @@ router.delete('/machine/:id',authMiddleware,mainController.deleteAction); // Del
 router.post('/login',authController.loginAction); // Login route
 router.get('/autologin',authMiddleware,authController.autoLogin); // Auto login route
 router.post('/signup',authController.signupAction); // Signup route
+router.patch('/account',authMiddleware,authController.updateAction); // Modify an user
 router.delete('/account',authMiddleware,authController.deleteAction); // Delete an user
 router.patch('/password',authMiddleware,authController.passUpdate) // Update the password
 // CRUD reservations

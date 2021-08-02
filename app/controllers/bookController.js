@@ -43,7 +43,7 @@ const bookController = {
 
         try{
             // Destructure the request body
-            const {temperature,timeResa,bringerId,washerId,machineId,statusId} = req.body
+            const {temperature,dispo,bringerId,washerId,machineId,statusId} = req.body
             
             // Send error if the token doesn't correspond to the right user
             if (!(bringerId == req.user.id)){throw new Error( "Error. You tried to book from another user." )}
@@ -54,7 +54,7 @@ const bookController = {
             // Create a instance of booking class with the data from the body request form
             const newBooking = new Booking ({
             temperature:temperature,
-            timeResa:timeResa,
+            dispo:dispo,
             bringer:bringerId,
             washer:washerId,
             machine:machineId,
