@@ -83,12 +83,12 @@ class User {
                     UPDATE "user" SET
                     pseudo = $1, firstname = $2,
                     lastname = $3, phone = $4,
-                    mail = $5, password = $6,
-                    avatar = $7 WHERE id = $8 RETURNING *;
+                    mail = $5, avatar = $6 
+                    WHERE id = $7 RETURNING *;
                 `, [
                     this.pseudo, this.firstname,
                     this.lastname, this.phone,
-                    this.mail, this.password,this.avatar,
+                    this.mail,this.avatar,
                     this.id
                 ]);
 

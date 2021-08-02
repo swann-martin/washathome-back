@@ -129,7 +129,7 @@ const authController = {
     try{
       // Destructure the request
       const {id} = req.user
-      const {pseudo,firstname,lastname,phone,mail,password,avatar} = req.body
+      const {pseudo,firstname,lastname,phone,mail,avatar} = req.body
       
       // Hash the password
       const hashedPassword = await bcrypt.hashSync(password, 10);
