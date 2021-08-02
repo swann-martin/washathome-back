@@ -70,7 +70,6 @@ class User {
                                     WHERE "user".id= $1
                                     GROUP BY ("user".id,machine.id);
     ` , [mail]);
-        console.log(rows);
         return rows.map(row => new User(row));
     }
 
@@ -113,8 +112,6 @@ class User {
                 WHERE id = $2 RETURNING *;
             `, [this.password,this.id]
         );
-        this.id = rows[0].id;
-
         // return the id of the user
         return rows.map(row => new User(row));
     }

@@ -120,7 +120,6 @@ const authController = {
                                     token:token })
     }  
     catch(error){
-      console.log(error);
       return res.status(400).json({ message: error.message });
     }
   },
@@ -143,6 +142,8 @@ const authController = {
         password:hashedPassword
       });
 
+      console.log(id);
+
       // Update the password
       await newPassword.updatePassword();
 
@@ -150,6 +151,7 @@ const authController = {
       return res.status(201).json({ message : 'Signup succeeded ! Your password have been changed.' })
     }
     catch(error){
+      console.log(error);
       return res.status(400).json({ message: error.message });    
     }
   },
