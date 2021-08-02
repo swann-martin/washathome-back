@@ -19,9 +19,9 @@ const mainController = {
     getById: async function (req,res) {
         try{
             const machine = await Machine.findById(req.params.id);
-            console.log(machine[0].user_id);
+
             const user = await User.findById(machine[0].user_id);
-            console.log(user[0].pseudo);
+
             if(!machine[0]){throw new Error( "Error. There is no machine with this id." )}
         
             res.json({machine:machine[0],user:{id:user[0].id, pseudo: user[0].pseudo}});
@@ -48,28 +48,25 @@ const mainController = {
         }
     },
 
-    // Signup action method
+    // Submit action method
     submitAction : async function(req,res) {
         try{
             // Destructure the request body
-            const {userId,capacity,name,description,zipCode,address,city,latitude,longitude,price} = req.body
-
-            // Send error if the token doesn't correspond to the right user
-            if (!(userId == req.user.id)){throw new Error( "Error. You tried to delete another user." )}
+            const {capacity,title,description,zip_code,address,city,latitude,longitude,price} = req.body
 
             // Create a instance of Machine class with the data from the body request form
             const newMachine = new Machine ({
             capacity:capacity,
-            name:name,
+            name:title,
             description:description,
-            zipCode:zipCode,
+            zipCode:zip_code,
             address:address,
             city:city,
             latitude:latitude,
             longitude:longitude,
             price:price,
             picture:price,
-            userId:userId
+            userId:req.user.id
             })
 
             // Saving the new machine class instanced with all the data in the database
@@ -82,11 +79,42 @@ const mainController = {
             console.log(error);
             return res.status(400).json({ message: error.message });
         }
-        
-/*         // If process arrives here, it means there's a unknown answer
-        return res.status(400).json({ message: "Unknow problem. Your machine haven't been created." }) */
     },
 
+    // Signup action method
+    updateAction : async function(req,res) {
+        try{
+            // Destructure the request body
+            const {id,capacity,name,description,zipCode,address,city,latitude,longitude,price} = req.body
+
+            // Create a instance of Machine class with the data from the body request form
+            const newMachine = new Machine ({
+            id:id,
+            capacity:capacity,
+            name:name,
+            description:description,
+            zipCode:zipCode,
+            address:address,
+            city:city,
+            latitude:latitude,
+            longitude:longitude,
+            price:price,
+            picture:price,
+            userId:req.user.id
+            })
+
+            // Saving the new machine class instanced with all the data in the database
+            const returned = await newMachine.save();
+          
+            // Send confirmation message
+            return res.status(200).json({ machine:returned, message: "Success ! The machine have been modified." })
+        }
+        catch(error){
+            console.log(error);
+            return res.status(400).json({ message: error.message });
+        }
+    },
+    
     // Delete an user method
     deleteAction : async function (req,res) {
 

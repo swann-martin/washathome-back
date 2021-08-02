@@ -53,15 +53,15 @@ class User {
     static async findByIdJoin (mail) {
 
         const {rows} = await db.query(`SELECT 
-                                        json_build_object('user_id', "user".id, 'user_pseudo', "user".pseudo,'user_lastname',"user".lastname,'user_firstname', "user".firstname,'user_phone',"user".phone,'user_mail',"user".mail,'user_avatar',"user".avatar,'user_password',"user".password)"user",
+                                        json_build_object('id', "user".id, 'pseudo', "user".pseudo,'lastname',"user".lastname,'firstname', "user".firstname,'phone',"user".phone,'mail',"user".mail,'avatar',"user".avatar)"user",
                                         json_build_object(
-                                            'machine_id', machine.id,
-                                            'machine_name', machine.name,
-                                            'machine_address',machine.address,
-                                            'machine_zip_code',machine.zip_code,
-                                            'machine_city',machine.city,
-                                            'machine_latitude',machine.latitude,
-                                            'machine_longitude',machine.longitude
+                                            'id', machine.id,
+                                            'name', machine.name,
+                                            'address',machine.address,
+                                            'zip_code',machine.zip_code,
+                                            'city',machine.city,
+                                            'latitude',machine.latitude,
+                                            'longitude',machine.longitude
                                         ) machine
                                         FROM 
                                             "user"
@@ -83,12 +83,12 @@ class User {
                     UPDATE "user" SET
                     pseudo = $1, firstname = $2,
                     lastname = $3, phone = $4,
-                    mail = $5, password = $6,
-                    avatar = $7 WHERE id = $8 RETURNING *;
+                    mail = $5, avatar = $6 
+                    WHERE id = $7 RETURNING *;
                 `, [
                     this.pseudo, this.firstname,
                     this.lastname, this.phone,
-                    this.mail, this.password,this.avatar,
+                    this.mail,this.avatar,
                     this.id
                 ]);
 

@@ -13,16 +13,16 @@ const authController = {
         // Get the user in database by the email
         const user = await User.findByMail(req.body.mail);
 
-        // Get the user's machines and bookings to join in the response
-        const join = await User.findByIdJoin(user[0].id)
-
         // Check email existence
         if(!user[0]){
          throw new Error( "Error. This email doesn't exist." )
         }
 
+        // Get the user's machines and bookings to join in the response
+        const join = await User.findByIdJoin(user[0].id)
+
         // Compare bcrypt hash concordance with bcryptjs
-        const check = bcrypt.compareSync(req.body.password,user[0].password);
+        const check = await bcrypt.compareSync(req.body.password,user[0].password);
         if (check===false){
           throw new Error( "Error. Wrong password" )
         }
@@ -44,6 +44,7 @@ const authController = {
                                     })
         }
         catch(error){
+          console.log(error);
           return res.status(400).json({ message: error.message });
         }
   },
@@ -85,7 +86,7 @@ const authController = {
       if(password != passwordConfirm){throw new Error( 'Error. Password confirmation is wrong.' )}
       
       // Hash the password
-      const hashedPassword = bcrypt.hashSync(password, 10);
+      const hashedPassword = await bcrypt.hashSync(password, 10);
 
       // Create a instance of User class with the data from the body request form
       const newUser = new User ({
@@ -128,10 +129,7 @@ const authController = {
     try{
       // Destructure the request
       const {id} = req.user
-      const {pseudo,firstname,lastname,phone,mail,password,avatar} = req.body
-      
-      // Hash the password
-      const hashedPassword = bcrypt.hashSync(password, 10);
+      const {pseudo,firstname,lastname,phone,mail,avatar} = req.body
 
       // Create a instance of User class with the data from the body request form
       const newUser = new User ({
@@ -141,7 +139,6 @@ const authController = {
         lastname:lastname,
         phone:phone,
         mail:mail,
-        password:hashedPassword,
         avatar:avatar
       })
 
@@ -158,11 +155,7 @@ const authController = {
       )
       
       // Send confirmation message
-      return res.status(201).json({ message : 'Patch succeeded ! Your account have been modified.',
-                                    isConnected : true,
-                                    user : userDb[0].id,
-                                    pseudo : userDb[0].pseudo,
-                                    token:token })
+      return res.status(201).json({ message : 'Patch succeeded ! Your account have been modified.', token:token })
     }  
     catch(error){
       return res.status(400).json({ message: error.message });
@@ -192,7 +185,7 @@ const authController = {
       await newPassword.updatePassword();
 
       // Send confirmation message
-      return res.status(201).json({ message : 'Signup succeeded ! Your password have been changed.' })
+      return res.status(201).json({ message : 'Modification succeeded ! Your password have been changed.' })
     }
     catch(error){
       console.log(error);
@@ -208,7 +201,7 @@ const authController = {
       const user = await User.findByPseudo(req.user.pseudo);
 
       // Send error if the user doesn't exist
-      if (!user[0]){throw new Error( "Error. This account doesn't exists." )}
+      if (!user[0]){throw new Error( "Error. This account doesn't exist." )}
 
       // Send error if the token doesn't correspond to the right user
       if (user[0].pseudo != req.user.pseudo){throw new Error( "Error. You tried to delete another user." )}
@@ -221,7 +214,7 @@ const authController = {
       if(stillExists[0]){throw new Error( "Unknow problem. Your account haven't been deleted." )}
 
       // Otherwise return a confirmation
-      return res.status(200).json({ message: "Success ! This account have been deleted." })
+      return res.status(200).json({ message: "Success ! This account have been deleted.", isConnected:false })
     }
     catch(error){
       return res.status(400).json({ message: error.message });
