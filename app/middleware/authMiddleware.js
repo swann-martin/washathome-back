@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 // Middleware object exported
 module.exports = function (req,res,next){
   try{
-    console.log(req.headers);
+    console.log(req.headers.authorization);
     const authorization = req.headers.authorization
     
     //Check authorization existence
