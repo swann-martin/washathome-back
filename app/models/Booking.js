@@ -58,7 +58,7 @@ class Booking {
                                         JOIN status ON booking.status_id = status.id
                                         FULL OUTER JOIN "include" ON booking.id = "include".booking_id
                                         FULL OUTER JOIN "option" ON "option".id = "include".option_id
-                                        WHERE b.id = $
+                                        WHERE b.id = $1
                                         GROUP BY (u.id, b.id, booking.id,machine.id,status.id,"option".id);`
                                         , [id]);
 
@@ -99,7 +99,7 @@ class Booking {
                                         JOIN status ON booking.status_id = status.id
                                         FULL OUTER JOIN "include" ON booking.id = "include".booking_id
                                         FULL OUTER JOIN "option" ON "option".id = "include".option_id
-                                        WHERE u.id = $
+                                        WHERE u.id = $1
                                         GROUP BY (u.id, b.id, booking.id,machine.id,status.id,"option".id);`
                                         , [id]);
 
