@@ -55,10 +55,7 @@ const authController = {
     const join = await User.findByIdJoin(req.user.id)
 
     // Send the response with connection status, user's id, token and message
-    return res.status(200).json({
-                                  isConnected : true,
-                                  user : join
-                                })
+    return res.status(200).json({ isConnected:true, user:join })
     }
     catch(error){
       return res.status(400).json({ message: error.message });
@@ -87,6 +84,7 @@ const authController = {
       // Check password confirmation concordance
       if(password != passwordConfirm){throw new Error( 'Error. Password confirmation is wrong.' )}
       
+      // Hash the password
       const hashedPassword = bcrypt.hashSync(password, 10);
 
       // Create a instance of User class with the data from the body request form
@@ -124,6 +122,53 @@ const authController = {
     }
   },
 
+  // Signup action method
+  updateAction : async function(req,res) {
+    
+    try{
+      // Destructure the request
+      const {id} = req.user
+      const {pseudo,firstname,lastname,phone,mail,password,avatar} = req.body
+      
+      // Hash the password
+      const hashedPassword = bcrypt.hashSync(password, 10);
+
+      // Create a instance of User class with the data from the body request form
+      const newUser = new User ({
+        id:id,
+        pseudo:pseudo,
+        firstname:firstname,
+        lastname:lastname,
+        phone:phone,
+        mail:mail,
+        password:hashedPassword,
+        avatar:avatar
+      })
+
+      // Saving the new user class instanced ith all the data in the database
+      const userDb = await newUser.save();
+
+      // Create the jwt token
+      const token = jwt.sign(
+        { id:userDb[0].id, pseudo: userDb[0].pseudo },
+        process.env.TOKEN_SECRET,
+        {
+          expiresIn: "5h",
+        }
+      )
+      
+      // Send confirmation message
+      return res.status(201).json({ message : 'Patch succeeded ! Your account have been modified.',
+                                    isConnected : true,
+                                    user : userDb[0].id,
+                                    pseudo : userDb[0].pseudo,
+                                    token:token })
+    }  
+    catch(error){
+      return res.status(400).json({ message: error.message });
+    }
+  },
+
   passUpdate : async function (req,res) {
 
     try{
@@ -137,12 +182,11 @@ const authController = {
       // Hash it
       const hashedPassword = bcrypt.hashSync(password, 10);
 
+      // Instance the class with the data
       const newPassword = new User ({
         id:id,
         password:hashedPassword
       });
-
-      console.log(id);
 
       // Update the password
       await newPassword.updatePassword();

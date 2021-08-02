@@ -13,6 +13,7 @@ class User {
     static async findById(id) {
         const { rows } = await db.query('SELECT * FROM "user" WHERE id = $1;', [id]);
 
+        //Returns the row of the user
         return rows.map(row => new User(row));
     }
 
@@ -20,6 +21,7 @@ class User {
     static async findAll() {
         const { rows } = await db.query('SELECT * FROM "user";');
 
+        //Returns the row of the user
         return rows.map(row => new User(row));
     }
 
@@ -27,6 +29,7 @@ class User {
     static async findByMail (mail) {
         const { rows } = await db.query('SELECT * FROM "user" WHERE mail = $1;' , [mail]);
 
+        //Returns the row of the user
         return rows.map(row => new User(row));
     }
 
@@ -34,6 +37,7 @@ class User {
     static async findByPseudo (pseudo) {
         const { rows } = await db.query('SELECT * FROM "user" WHERE pseudo = $1;' , [pseudo]);
 
+        //Returns the row of the user
         return rows.map(row => new User(row));
     }
 
@@ -41,12 +45,15 @@ class User {
     static async findByPhone (phone) {
         const { rows } = await db.query('SELECT * FROM "user" WHERE phone = $1;' , [phone]);
 
+        //Returns the row of the user
         return rows.map(row => new User(row));
     }
 
     // Find by mail and send machines method
     static async findByIdJoin (mail) {
-        const {rows} = await db.query(`SELECT
+
+        // return the id of the user
+        const {rows} = await db.query(`SELECT 
                                         json_build_object('user_id', "user".id, 'user_pseudo', "user".pseudo,'user_lastname',"user".lastname,'user_firstname', "user".firstname,'user_phone',"user".phone,'user_mail',"user".mail,'user_avatar',"user".avatar,'user_password',"user".password)"user",
                                         json_build_object(
                                             'machine_id', machine.id,
@@ -55,29 +62,25 @@ class User {
                                             'machine_zip_code',machine.zip_code,
                                             'machine_city',machine.city,
                                             'machine_latitude',machine.latitude,
-                                            'machine_longitude',machine.longitude,
-                                            'dispos', ARRAY_AGG (json_build_object(
-                                                'availibility_id',availibility.id,
-                                                'availibility_open_hour', To_char(availibility.open_hour,'HH24:MI - DD/MM/YYYY'),
-                                                'availibility_end_hour', To_char(availibility.end_hour,'HH24:MI - DD/MM/YYYY'),
-                                                'availibility_booked',availibility.booked ,
-                                                'machine_id',machine.id)
-                                        )) machine
-                                    FROM 
-                                        "user"
-                                    FULL OUTER JOIN machine ON "user".id=machine.user_id 
-                                    FULL OUTER JOIN availibility ON machine.id = availibility.machine_id
-                                    WHERE "user".id= $1
-                                    GROUP BY ("user".id,machine.id);
-    ` , [mail]);
+                                            'machine_longitude',machine.longitude
+                                        ) machine
+                                        FROM 
+                                            "user"
+                                        FULL OUTER JOIN machine ON "user".id=machine.user_id 
+                                        WHERE "user".id= $1
+                                        GROUP BY ("user".id,machine.id);
+                                        ` , [mail]);
+
+        //Returns the row of the user
         return rows.map(row => new User(row));
     }
 
     // Create row method
     async save() {
         if (this.id) {
+
             // si l'instance a un id, opère une mise à jour
-            await db.query(`
+            const { rows } = await db.query(`
                     UPDATE "user" SET
                     pseudo = $1, firstname = $2,
                     lastname = $3, phone = $4,
@@ -88,8 +91,11 @@ class User {
                     this.lastname, this.phone,
                     this.mail, this.password,this.avatar,
                     this.id
-                ]
-            );
+                ]);
+
+            // return the row of the user
+            return rows.map(row => new User(row));
+
         } else {
             const { rows } = await db.query(`
                 INSERT INTO "user" (pseudo, firstname, lastname, phone, mail, password, avatar)
@@ -100,9 +106,7 @@ class User {
                 this.mail, this.password,
                 this.avatar
             ]);
-            this.id = rows[0].id;
-
-            // return the id of the user
+            // return the row of the user
             return rows.map(row => new User(row));
         }
     }
@@ -115,7 +119,7 @@ class User {
                 WHERE id = $2 RETURNING *;
             `, [this.password,this.id]
         );
-        // return the id of the user
+        // return the row of the user
         return rows.map(row => new User(row));
     }
 
@@ -125,4 +129,5 @@ class User {
     }
 }
 
+// Exports
 module.exports = User;

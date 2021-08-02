@@ -13,6 +13,7 @@ class Machine {
     static async findAll() {
         const { rows } = await db.query('SELECT * FROM machine;');
 
+        // Returns the row of the machine
         return rows.map(row => new Machine(row));
     }
 
@@ -20,13 +21,15 @@ class Machine {
     static async findById(id) {
         const { rows } = await db.query(`SELECT * FROM machine WHERE id = $1`, [id]);
         
+        // Returns the row of the machine
         return rows.map(row => new Machine(row));
     }
 
     // Find by user id method
     static async findByUserId(id) {
         const { rows } = await db.query('SELECT * FROM machine WHERE user_id = $1;', [id]);
-        
+
+        // Returns the row of the machine
         return rows.map(row => new Machine(row));
     }
 
@@ -34,13 +37,15 @@ class Machine {
     static async findByZipCode (zipCode) {
         const { rows } = await db.query(`SELECT * FROM machine WHERE zip_code =$1` , [zipCode]);
 
+        // Returns the row of the machine
         return rows.map(row => new Machine(row));
     }
 
     // Create row method
     async save() {
+
         if (this.id) {
-            // si l'instance a un id, opère une mise à jour
+            // Update if class instance has an id
             await db.query(`
                     UPDATE machine SET
                     capacity = $1, name = $2,
@@ -58,6 +63,7 @@ class Machine {
                 ]
             );
         } else {
+
             const { rows } = await db.query(`
                 INSERT INTO machine (capacity, name, description, zip_code, address, city, latitude, longitude, price, picture, user_id)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING *;
@@ -68,9 +74,8 @@ class Machine {
                 this.latitude, this.longitude,
                 this.price, this.picture, this.userId
             ]);
-            this.id = rows[0].id;
 
-            // return the id of the machine
+            // return the row of the machine
             return rows.map(row => new Machine(row));
         }
     }
@@ -81,4 +86,5 @@ class Machine {
     }
 }
 
+// Exports
 module.exports = Machine;
