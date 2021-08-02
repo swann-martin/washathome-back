@@ -19,9 +19,9 @@ const mainController = {
     getById: async function (req,res) {
         try{
             const machine = await Machine.findById(req.params.id);
-            console.log(machine[0].user_id);
+
             const user = await User.findById(machine[0].user_id);
-            console.log(user[0].pseudo);
+
             if(!machine[0]){throw new Error( "Error. There is no machine with this id." )}
         
             res.json({machine:machine[0],user:{id:user[0].id, pseudo: user[0].pseudo}});

@@ -132,7 +132,7 @@ const authController = {
       const {pseudo,firstname,lastname,phone,mail,password,avatar} = req.body
       
       // Hash the password
-      const hashedPassword = bcrypt.hashSync(password, 10);
+      const hashedPassword = await bcrypt.hashSync(password, 10);
 
       // Create a instance of User class with the data from the body request form
       const newUser = new User ({
@@ -142,7 +142,6 @@ const authController = {
         lastname:lastname,
         phone:phone,
         mail:mail,
-        password:hashedPassword,
         avatar:avatar
       })
 
@@ -193,7 +192,7 @@ const authController = {
       await newPassword.updatePassword();
 
       // Send confirmation message
-      return res.status(201).json({ message : 'Signup succeeded ! Your password have been changed.' })
+      return res.status(201).json({ message : 'Modification succeeded ! Your password have been changed.' })
     }
     catch(error){
       console.log(error);
