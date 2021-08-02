@@ -16,6 +16,7 @@ router.get('/search/:zipCode',mainController.getByZipCode); // Search all the ma
 router.get('/searchall',mainController.getAll); // Send all the machines
 router.get('/machine/:id',mainController.getById); // Search all the machines by the id in the dynamic URL
 router.post('/machine',authMiddleware,geocodingZipCode,mainController.submitAction); // Add a new machine
+router.patch('/machine',authMiddleware,geocodingZipCode,mainController.updateAction); // Modify a machine
 router.delete('/machine/:id',authMiddleware,mainController.deleteAction); // Delete a machine
 // CRUD users
 router.post('/login',authController.loginAction); // Login route

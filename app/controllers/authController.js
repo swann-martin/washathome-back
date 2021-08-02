@@ -13,13 +13,13 @@ const authController = {
         // Get the user in database by the email
         const user = await User.findByMail(req.body.mail);
 
-        // Get the user's machines and bookings to join in the response
-        const join = await User.findByIdJoin(user[0].id)
-
         // Check email existence
         if(!user[0]){
          throw new Error( "Error. This email doesn't exist." )
         }
+
+        // Get the user's machines and bookings to join in the response
+        const join = await User.findByIdJoin(user[0].id)
 
         // Compare bcrypt hash concordance with bcryptjs
         const check = bcrypt.compareSync(req.body.password,user[0].password);
@@ -44,6 +44,7 @@ const authController = {
                                     })
         }
         catch(error){
+          console.log(error);
           return res.status(400).json({ message: error.message });
         }
   },
@@ -221,7 +222,7 @@ const authController = {
       if(stillExists[0]){throw new Error( "Unknow problem. Your account haven't been deleted." )}
 
       // Otherwise return a confirmation
-      return res.status(200).json({ message: "Success ! This account have been deleted." })
+      return res.status(200).json({ message: "Success ! This account have been deleted.", isConnected:false })
     }
     catch(error){
       return res.status(400).json({ message: error.message });
