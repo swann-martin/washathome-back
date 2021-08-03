@@ -1,8 +1,7 @@
 
-BOOKING ( id, temperature,time_resa, #user_id, #machine_id, #status_id)
+BOOKING ( id, temperature,dispo, #bringer_id,#washer_id, #machine_id, #status_id)
 USER( id, pseudo, firstname, lastname, phone_number, mail, password, avatar)
 MACHINE( id, capacity, name, description, zip, address, city, latitude, longitude price,photo, #user_id)
-AVAILABILITY ( id,open_hour , end_hour, booked, #machine_id )
 OPTION(id, name, price)
 STATUS (id,label)
 INCLUDE(#reservation_id, #option_id)

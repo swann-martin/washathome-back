@@ -1,6 +1,6 @@
 SELECT 
-	json_build_object('washer_id', u.id, 'washer_pseudo', u.pseudo, 'washer_phone', u.phone, 'washer_mail', u.mail) washer,
-	json_build_object('bringer_id', b .id, 'bringer_pseudo', b .pseudo) bringer,
+	json_build_object('id', u.id, 'pseudo', u.pseudo, 'phone', u.phone, 'mail', u.mail) washer,
+	json_build_object('id', b .id, 'pseudo', b .pseudo) bringer,
 	json_build_object(
 		'idResa', booking.id, 
 		'dispo', booking.dispo,
@@ -28,5 +28,5 @@ JOIN machine ON  machine.id = booking.machine_id
 JOIN status ON booking.status_id = status.id
 FULL OUTER JOIN "include" ON booking.id = "include".booking_id
 FULL OUTER JOIN "option" ON "option".id = "include".option_id
-WHERE u.id = $
+WHERE u.id = 5
 GROUP BY (u.id, b.id, booking.id,machine.id,status.id,"option".id);

@@ -61,7 +61,7 @@ INSERT INTO booking (temperature,dispo,bringer_id,washer_id,machine_id,status_id
 (40,'dispo tous les aprés midi de la semaine',17,2,2,4),
 (60,'dispo de 09h à 11h00 et de 17h30 à 20h00',3,15,9,5),
 (20,'dispo le mardi de 11h00 à 16h00 et de 19h00 à 21h00',8,10,3,6),
-(20,'dispo tous les joours sauf dimanche',6,16,7,3),
+(20,'dispo tous les jours sauf dimanche',6,16,7,3),
 (20,'dispo tous les jours de 14h00a à 18h00',18,19,10,1),
 (20,'dispo tous les matins de 09h00 à 13h00',9,20,11,4);
 
