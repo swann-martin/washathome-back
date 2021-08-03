@@ -59,6 +59,7 @@ const authController = {
     return res.status(200).json({ isConnected:true, user:join })
     }
     catch(error){
+      console.log(error);
       return res.status(400).json({ message: error.message });
     }
   },
@@ -119,6 +120,7 @@ const authController = {
                                     token:token })
     }  
     catch(error){
+      console.log(error);
       return res.status(400).json({ message: error.message });
     }
   },
@@ -155,9 +157,10 @@ const authController = {
       )
       
       // Send confirmation message
-      return res.status(201).json({ message : 'Mise à jour réussie ! Votre compte a bien été modifié.', token:token })
+      return res.status(200).json({ message : 'Mise à jour réussie ! Votre compte a bien été modifié.', token:token })
     }  
     catch(error){
+      console.log(error);
       return res.status(400).json({ message: error.message });
     }
   },
@@ -185,7 +188,7 @@ const authController = {
       await newPassword.updatePassword();
 
       // Send confirmation message
-      return res.status(201).json({ message : 'Mise à jour réussie ! Votre mot de passe a bien été modifié.' })
+      return res.status(200).json({ message : 'Mise à jour réussie ! Votre mot de passe a bien été modifié.' })
     }
     catch(error){
       console.log(error);
@@ -203,9 +206,6 @@ const authController = {
       // Send error if the user doesn't exist
       if (!user[0]){throw new Error( "Échec. Ce compte n'existe pas." )}
 
-      // Send error if the token doesn't correspond to the right user
-      if (user[0].pseudo != req.user.pseudo){throw new Error( "Échec. Vous avez tenté de supprimer un autre compte." )}
-
       // Delete the user
       await User.delete(user[0].id)
 
@@ -213,6 +213,7 @@ const authController = {
       return res.status(200).json({ message: "Supression réussie ! Votre compte a bien été supprimé.", isConnected:false })
     }
     catch(error){
+      console.log(error);
       return res.status(400).json({ message: error.message });
     }
   }

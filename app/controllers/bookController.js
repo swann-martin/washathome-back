@@ -6,9 +6,15 @@ const bookController = {
 
     // Send all the bookings
     getAll: async function (req,res) {
-        const results = await Booking.findAll();
-        
-        res.json(results);
+        try{
+            const results = await Booking.findAll();
+            
+            return res.status(200).json(results);
+        }
+        catch(error){
+            console.log(error);
+            return res.status(400).json({ message: error.message });         
+        }
     },
 
     // Method get one booking
@@ -19,6 +25,8 @@ const bookController = {
 
             // Get the bookings by the bringer id
             const bringerBookings = await Booking.findByBringerId(req.user.id);
+
+            if (!( bringerBookings[0] && washerBookings[0] )){ throw new Error( "Échec. Il n'y a pas de réservations pour cet utilisateur." ) };
 
             // Delete the personnal information of the washer according to the status of the booking
             bringerBookings.forEach(element=>{  if( element.resa.status_id == 1 || element.resa.status_id == 5 || element.resa.status_id == 6 ){
@@ -31,9 +39,10 @@ const bookController = {
                                                     delete element.washer.washer_mail; }})
 
             // Send the list of booking within a json
-            res.json({ washerBookings:washerBookings, bringerBookings:bringerBookings });
+            return res.status(200).json({ washerBookings:washerBookings, bringerBookings:bringerBookings });
         }
         catch (error) {
+            console.log(error);
             return res.status(400).json({ message: error.message });
         }
     },
@@ -43,19 +52,16 @@ const bookController = {
 
         try{
             // Destructure the request body
-            const {temperature,dispo,bringerId,washerId,machineId,statusId} = req.body
-            
-            // Send error if the token doesn't correspond to the right user
-            if (!(bringerId == req.user.id)){throw new Error( "Error. You tried to book from another user." )}
+            const {temperature,dispo,washerId,machineId,statusId} = req.body
 
             // Send error if the token doesn't correspond to the right user
-            if (!(bringerId == washerId)){throw new Error( "You cannot book your own machine." )}
+            if (!(req.user.id == washerId)){throw new Error( "Échec. Vous ne pouvez pas réserver votre propre machine." )}
 
             // Create a instance of booking class with the data from the body request form
             const newBooking = new Booking ({
             temperature:temperature,
             dispo:dispo,
-            bringer:bringerId,
+            bringer:req.user.id,
             washer:washerId,
             machine:machineId,
             status:statusId
@@ -65,7 +71,7 @@ const bookController = {
             const returned = await newBooking.save();
           
             // Send confirmation message
-            return res.status(200).json({ booking:returned, message: "Success ! The booking have been added." })
+            return res.status(201).json({ booking:returned, message: "Soumission réussie ! Votre réservervation a bien été prise en compte." })
         }
         catch(error){
             console.log(error);
@@ -80,24 +86,22 @@ const bookController = {
 
         // Verify if the status isn't already the same
         const bookingDb = await Booking.findById(id);
-        if(bookingDb[0].status_id==statusId){ throw new Error( "Error. The booking already has this state." ) }
+        if(bookingDb[0].status_id==statusId){ throw new Error( "Échec. La réservation a déjà cet état." ) }
         
         // Send error if the token doesn't correspond to the right user
         if (!(bookingDb[0].bringer_id == req.user.id || bookingDb[0].washer_id == req.user.id)){
-            throw new Error( "Error. You tried to change the state of another user's booking." )
+            throw new Error( "Échec. Vous essayez de changer l'état d'une réservation qui ne vous appartient pas." )
         }
         
         // Instance the active record class and call the change state function
         const update = new Booking({ id:id, statusId: statusId })
         const returned = await update.changeState(update);
 
-        // Check if booking doesn't exist anymore in the database
-        if(!(returned[0].status_id==statusId)){ throw new Error( "Unknow problem. The booking state haven't been updated." ) }
-
         // Otherwise return a succees message
-        return res.status(200).json({ message: "Success ! This booking have been updated." })
+        return res.status(200).json({ message: "Mise à jour réussie ! La réservation a bien été modifié." })
         }
         catch(error){
+            console.log(error);
             return res.status(400).json({ message: error.message });
         }
 
@@ -109,19 +113,16 @@ const bookController = {
         try{
             // Verify booking's existence in database by the id
             const booking = await Booking.findById(req.params.id);
-            if (!booking[0]){ throw new Error("Error. This booking doesn't exist.") }
+            if (!booking[0]){ throw new Error("Échec. Cette réservation n'existe pas.") }
 
             // Delete the booking
             await Booking.delete(req.params.id)
 
-            // Check if booking doesn't exist anymore in the database
-            const stillExists = await Booking.findById(req.params.id);
-            if(stillExists[0]){ throw new Error( "Unknow problem. The booking haven't been deleted." ) }
-
             // Otherwise return a succees message
-            return res.status(200).json({ message: "Success ! This booking have been deleted." })
+            return res.status(200).json({ message: "Supression réussie ! La réservation a bien été supprimé." })
         }
         catch(error){
+            console.log(error);
             return res.status(400).json({ message: error.message });
         }
     }
