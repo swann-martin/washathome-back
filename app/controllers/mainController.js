@@ -9,8 +9,11 @@ const mainController = {
     getAll: async function (req,res) {
         try{
             const results = await Machine.findAll();
-            res.json(results);
-        }catch(error){
+
+            return res.status(200).json(results);
+        }
+        catch(error){
+            console.log(error);
             return res.status(400).json({ message: error.message });
         }
     },
@@ -22,11 +25,12 @@ const mainController = {
 
             const user = await User.findById(machine[0].user_id);
 
-            if(!machine[0]){throw new Error( "Error. There is no machine with this id." )}
+            if(!machine[0]){throw new Error( "Échec. Aucune machine n'existe avec cet id." )}
         
-            res.json({machine:machine[0],user:{id:user[0].id, pseudo: user[0].pseudo}});
+            return res.status(200).json({machine:machine[0],user:{id:user[0].id, pseudo: user[0].pseudo}});
         }
         catch(error){
+            console.log(error);
             return res.status(400).json({ message: error.message });
         }
     },
@@ -38,12 +42,13 @@ const mainController = {
             const machines = await Machine.findByZipCode(req.params.zipCode);
 
             // Check if machines are found
-            if(!machines[0]){throw new Error('Error. No machines in that city');}
+            if(!machines[0]){throw new Error("Échec. Il n'y a aucune machine dans cette ville.");}
 
             // Send the list of machine within a json
-            res.json(machines);
+            return res.status(200).json(machines);
         }
         catch (error) {
+            console.log(error);
             return res.status(400).json({ message: error.message });
         }
     },
@@ -73,7 +78,7 @@ const mainController = {
             const returned = await newMachine.save();
           
             // Send confirmation message
-            return res.status(200).json({ machine:returned, message: "Success ! The machine have been added." })
+            return res.status(201).json({ machine:returned, message: "Success ! The machine have been added." })
         }
         catch(error){
             console.log(error);
@@ -107,7 +112,7 @@ const mainController = {
             const returned = await newMachine.save();
           
             // Send confirmation message
-            return res.status(200).json({ machine:returned, message: "Success ! The machine have been modified." })
+            return res.status(200).json({ machine:returned, message: "Mise à jour réussie ! La machine a bien été modifié." })
         }
         catch(error){
             console.log(error);
@@ -121,22 +126,19 @@ const mainController = {
         try{
             // Verify machine's existence in database by the id
             const machine = await Machine.findById(req.params.id);
-            if (!machine[0]){ throw new Error("Error. This machine doesn't exist.") }
+            if (!machine[0]){ throw new Error("Échec. Il n'y a aucune machine dans cette ville.") }
 
             // Send error if the token doesn't correspond to the right user of this machine
-            if (machine[0].user_id != req.user.id){throw new Error( "Error. You tried to delete the machine of another user." )}
+            if (machine[0].user_id != req.user.id){throw new Error( "Échec. Vous avez tenté de supprimer un machine qui ne vous appartient pas." )}
             
             // Delete the machine
             await Machine.delete(req.params.id)
 
-            // Check if machine doesn't exist anymore in the database
-            const stillExists = await Machine.findById(req.params.id);
-            if(stillExists[0]){ throw new Error( "Unknow problem. The machine haven't been deleted." ) }
-
             // Otherwise return a succees message
-            return res.status(200).json({ message: "Success ! This machine have been deleted." })
+            return res.status(200).json({ message: "Supression réussie ! La machine a bien été supprimé." })
         }
         catch(error){
+            console.log(error);
             return res.status(400).json({ message: error.message });
         }
     }

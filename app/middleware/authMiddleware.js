@@ -5,15 +5,15 @@ const jwt = require('jsonwebtoken');
 module.exports = function (req,res,next){
   try{
     //Check authorization existence
-    if (!req.headers.authorization) {throw new Error("Error. No authorization property in the request header" )}
+    if (!req.headers.authorization) {throw new Error("Échec. Il manque la propriété 'authorization' dans le header." )}
 
     // Keep the first part of the token in the header
     const token = req.headers.authorization.split(' ')[1]
     console.log(token);
     
     // Verify concordance with passphrase
-    jwt.verify(token,process.env.TOKEN_SECRET, (err, user) => {
-      if (err) {throw new Error( "Error. Wrong token" )}
+    jwt.verify(token,process.env.TOKEN_SECRET, (error, user) => {
+      if (error) {throw new Error(error)}
       req.user = user
     })
 
@@ -21,7 +21,8 @@ module.exports = function (req,res,next){
     next()
   }
   catch(error){
-    throw new Error(error.message);
+    console.log(error);
+    return res.status(400).json({ message: error.message });         
   }
   // Pass the req object to the next express route function
 }

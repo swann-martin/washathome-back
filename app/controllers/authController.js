@@ -15,7 +15,7 @@ const authController = {
 
         // Check email existence
         if(!user[0]){
-         throw new Error( "Error. This email doesn't exist." )
+         throw new Error( "Échec. Cette adresse mail n'existe pas." )
         }
 
         // Get the user's machines and bookings to join in the response
@@ -24,7 +24,7 @@ const authController = {
         // Compare bcrypt hash concordance with bcryptjs
         const check = await bcrypt.compareSync(req.body.password,user[0].password);
         if (check===false){
-          throw new Error( "Error. Wrong password" )
+          throw new Error( "Échec. Le mot de passe ne correspond pas." )
         }
       
         // Create the jwt token
@@ -59,6 +59,7 @@ const authController = {
     return res.status(200).json({ isConnected:true, user:join })
     }
     catch(error){
+      console.log(error);
       return res.status(400).json({ message: error.message });
     }
   },
@@ -72,18 +73,18 @@ const authController = {
     
       // Verify pseudo inexistance in database
       const pseudoDb = await User.findByPseudo(pseudo);
-      if(pseudoDb[0]){throw new Error( 'Error. Pseudo already exists.' )}
+      if(pseudoDb[0]){throw new Error( 'Échec. Le pseudo est déjà utilisé.' )}
 
       // Verify phone inexistance in database
       const phoneDb = await User.findByPhone(phone);
-      if(phoneDb[0]){throw new Error( 'Error. Phone number already exists.' )}
+      if(phoneDb[0]){throw new Error( 'Échec. Le numero de téléphone est déjà utilisé.' )}
 
       // Verify mail inexistance in database
       const mailDb = await User.findByMail(mail);
-      if(mailDb[0]){throw new Error( 'Error. Mail already exists.' )}
+      if(mailDb[0]){throw new Error( "Échec. L'adresse mail est déjà utilisé." )}
 
       // Check password confirmation concordance
-      if(password != passwordConfirm){throw new Error( 'Error. Password confirmation is wrong.' )}
+      if(password != passwordConfirm){throw new Error( "Échec. La confirmation de mot de passe n'est pas bonne." )}
       
       // Hash the password
       const hashedPassword = await bcrypt.hashSync(password, 10);
@@ -112,13 +113,14 @@ const authController = {
       )
       
       // Send confirmation message
-      return res.status(201).json({ message : 'Signup succeeded ! Your account have been created.',
+      return res.status(201).json({ message : 'Enregistrement réussi ! Votre compte a bien été créé.',
                                     isConnected : true,
                                     user : userDb[0].id,
                                     pseudo : userDb[0].pseudo,
                                     token:token })
     }  
     catch(error){
+      console.log(error);
       return res.status(400).json({ message: error.message });
     }
   },
@@ -155,9 +157,10 @@ const authController = {
       )
       
       // Send confirmation message
-      return res.status(201).json({ message : 'Patch succeeded ! Your account have been modified.', token:token })
+      return res.status(200).json({ message : 'Mise à jour réussie ! Votre compte a bien été modifié.', token:token })
     }  
     catch(error){
+      console.log(error);
       return res.status(400).json({ message: error.message });
     }
   },
@@ -170,7 +173,7 @@ const authController = {
       const {password,passwordConfirm} = req.body
 
       // Check password confirmation concordance
-      if(password != passwordConfirm){throw new Error( 'Error. Password confirmation is wrong.' )}
+      if(password != passwordConfirm){throw new Error( "Échec. La confirmation de mot de passe n'est pas bonne." )}
 
       // Hash it
       const hashedPassword = bcrypt.hashSync(password, 10);
@@ -185,7 +188,7 @@ const authController = {
       await newPassword.updatePassword();
 
       // Send confirmation message
-      return res.status(201).json({ message : 'Modification succeeded ! Your password have been changed.' })
+      return res.status(200).json({ message : 'Mise à jour réussie ! Votre mot de passe a bien été modifié.' })
     }
     catch(error){
       console.log(error);
@@ -201,22 +204,16 @@ const authController = {
       const user = await User.findByPseudo(req.user.pseudo);
 
       // Send error if the user doesn't exist
-      if (!user[0]){throw new Error( "Error. This account doesn't exist." )}
-
-      // Send error if the token doesn't correspond to the right user
-      if (user[0].pseudo != req.user.pseudo){throw new Error( "Error. You tried to delete another user." )}
+      if (!user[0]){throw new Error( "Échec. Ce compte n'existe pas." )}
 
       // Delete the user
       await User.delete(user[0].id)
 
-      // Send error if user is found anymore in the database
-      const stillExists = await User.findByPseudo(req.params.pseudo);
-      if(stillExists[0]){throw new Error( "Unknow problem. Your account haven't been deleted." )}
-
       // Otherwise return a confirmation
-      return res.status(200).json({ message: "Success ! This account have been deleted.", isConnected:false })
+      return res.status(200).json({ message: "Supression réussie ! Votre compte a bien été supprimé.", isConnected:false })
     }
     catch(error){
+      console.log(error);
       return res.status(400).json({ message: error.message });
     }
   }
