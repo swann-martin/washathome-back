@@ -55,7 +55,7 @@ const bookController = {
             const {temperature,dispo,washerId,machineId,statusId} = req.body
 
             // Send error if the token doesn't correspond to the right user
-            if (!(req.user.id == washerId)){throw new Error( "Échec. Vous ne pouvez pas réserver votre propre machine." )}
+            if (req.user.id == washerId){throw new Error( "Échec. Vous ne pouvez pas réserver votre propre machine." )}
 
             // Create a instance of booking class with the data from the body request form
             const newBooking = new Booking ({
@@ -69,6 +69,12 @@ const bookController = {
 
             // Saving the new booking class instanced with all the data in the database
             const returned = await newBooking.save();
+            
+            // Insert the options in include table
+            for(const option in req.body.options){
+                
+                await Booking.options(returned[0].id,req.body.options[option])
+            }
           
             // Send confirmation message
             return res.status(201).json({ booking:returned, message: "Soumission réussie ! Votre réservervation a bien été prise en compte." })
