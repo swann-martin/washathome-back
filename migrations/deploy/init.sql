@@ -39,7 +39,7 @@ CREATE TABLE machine (
 CREATE TABLE booking (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     temperature INT NOT NULL,
-    time_resa TIMESTAMPTZ ,
+    dispo TEXT NOT NULL,
     bringer_id INT REFERENCES "user"(id) on delete cascade,
     washer_id INT REFERENCES "user"(id) on delete cascade,
     machine_id INT REFERENCES machine(id)on delete cascade,
