@@ -33,18 +33,18 @@ CREATE TABLE machine (
    longitude FLOAT,
    price INT NOT NULL,
    picture TEXT,
-   user_id INT REFERENCES "user"(id)
+   user_id INT REFERENCES "user"(id) ON DELETE CASCADE
 );
 
 CREATE TABLE booking (
     id INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     temperature INT NOT NULL,
     --time_resa TIMESTAMPTZ ,
-    dispo TEXT,
-    bringer_id INT REFERENCES "user"(id),
-    washer_id INT REFERENCES "user"(id),
-    machine_id INT REFERENCES machine(id),
-    status_id INT REFERENCES "status"(id)
+    dispo TEXT NOT NULL,
+    bringer_id INT REFERENCES "user"(id) ON DELETE CASCADE,
+    washer_id INT REFERENCES "user"(id) ON DELETE CASCADE,
+    machine_id INT REFERENCES machine(id) ON DELETE CASCADE,
+    status_id INT REFERENCES "status"(id) ON DELETE CASCADE
 );
 
 
@@ -64,8 +64,8 @@ CREATE TABLE option (
 );
 
 CREATE TABLE include (
-    booking_id INT REFERENCES booking(id),
-    option_id INT REFERENCES option(id)
+    booking_id INT REFERENCES booking(id) ON DELETE CASCADE,
+    option_id INT REFERENCES option(id) ON DELETE CASCADE
 );
 
 CREATE TABLE ancillary (
