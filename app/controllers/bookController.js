@@ -73,18 +73,16 @@ const bookController = {
             // Get the options and put them in a array
             const options = []
             for(const option in req.body.options){
-                
-                const optReturned = await Booking.options(returned.id,req.body.options[option])
-
-                options.push(optReturned[0].option_id)
+                const [optReturned] = await Booking.options(returned.id,req.body.options[option])
+                options.push(optReturned.option_id)
             }
 
-              // Get the total
-            const [total] = await Booking.total(returned.id)
+            // Get the total
+            const total = await Booking.total(returned.id)
 
             // Put the options and the total in the returned (booking) object
             returned.options = options;
-            returned.total = total.total_amount;
+            returned.total = total[0].total_amount;
 
             // Send confirmation message
             return res.status(201).json({ booking:returned, message : "Soumission réussie ! Votre réservervation a bien été prise en compte." })

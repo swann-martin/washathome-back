@@ -160,7 +160,7 @@ class Booking {
 
     // Get the total of the reservation method
     static async total(id) {
-        const {rows} = await db.query('SELECT * FROM bill WHERE id = $1;', [id]);
+        const {rows} = await db.query('SELECT * FROM bill WHERE id = $1', [id]);
 
         // return the row of the total
         return rows.map(row => new Booking(row))
