@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 
-module.exports = async function geocoding (req,res,next) {
+module.exports = async function geocodingAddress (req,res,next) {
     try{
         // Get and concatenate the address from the json request body
         const {address} = req.body

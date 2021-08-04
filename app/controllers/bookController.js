@@ -78,7 +78,6 @@ const bookController = {
 
                 options.push(optReturned[0].option_id)
             }
-
             returned.push(options)
 
             // Send confirmation message
@@ -130,7 +129,7 @@ const bookController = {
             await Booking.delete(req.params.id)
 
             // Otherwise return a succees message
-            return res.status(200).json({ message: "Supression réussie ! La réservation a bien été supprimé." })
+            return res.status(200).json({ message: "Suppression réussie ! La réservation a bien été supprimé." })
         }
         catch(error){
             console.log(error);
