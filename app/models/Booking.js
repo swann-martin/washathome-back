@@ -39,7 +39,7 @@ class Booking {
                                             'bringer_id', b.id,
                                             'status_id', status.id,
                                             'status_name', status.label,
-                                            'options',ARRAY_AGG ("option".id || '   ' || "option".name || '   ' || "option".price)
+                                            'options', json_agg(json_build_object('id', "option".id, 'name', "option".name, 'price', "option".price))
                                         ) resa ,
                                         json_build_object(
                                             'id', machine.id,
@@ -48,7 +48,8 @@ class Booking {
                                             'zip_code',machine.zip_code,
                                             'city',machine.city,
                                             'latitude',machine.latitude,
-                                            'longitude',machine.longitude
+                                            'longitude',machine.longitude,
+                                            'price', machine.price
                                         ) machine
                                         FROM
                                             "user" b
@@ -59,7 +60,7 @@ class Booking {
                                         FULL OUTER JOIN "include" ON booking.id = "include".booking_id
                                         FULL OUTER JOIN "option" ON "option".id = "include".option_id
                                         WHERE b.id = $1
-                                        GROUP BY (u.id, b.id, booking.id,machine.id,status.id,"option".id);
+                                        GROUP BY (u.id, b.id, booking.id,machine.id,status.id);
                                         `, [id]);
         
         // Returns the row of the res
@@ -80,7 +81,7 @@ class Booking {
                                           'bringer_id', b .id, 
                                           'status_id', status.id, 
                                           'status_name', status.label,
-                                          'options',ARRAY_AGG ("option".id || '   ' || "option".name || '   ' || "option".price)
+                                          'options', json_agg(json_build_object('id', "option".id, 'name', "option".name, 'price', "option".price))
                                         ) resa ,
                                         json_build_object(
                                           'id', machine.id,
@@ -89,7 +90,8 @@ class Booking {
                                           'zip_code',machine.zip_code,
                                           'city',machine.city,
                                           'latitude',machine.latitude,
-                                          'longitude',machine.longitude
+                                          'longitude',machine.longitude,
+                                          'price', machine.price
                                         ) machine
                                         FROM 
                                         "user" u
@@ -100,7 +102,7 @@ class Booking {
                                         FULL OUTER JOIN "include" ON booking.id = "include".booking_id
                                         FULL OUTER JOIN "option" ON "option".id = "include".option_id
                                         WHERE u.id = $1
-                                        GROUP BY (u.id, b.id, booking.id,machine.id,status.id,"option".id);`
+                                        GROUP BY (u.id, b.id, booking.id,machine.id,status.id);`
                                         , [id]);
 
         // return the row of the reservation

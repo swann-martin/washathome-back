@@ -26,17 +26,41 @@ const bookController = {
             // Get the bookings by the bringer id
             const bringerBookings = await Booking.findByBringerId(req.user.id);
 
-            if (!( bringerBookings[0] && washerBookings[0] )){ throw new Error( "Échec. Il n'y a pas de réservations pour cet utilisateur." ) };
+//            if (!( bringerBookings[0] && washerBookings[0] )){ throw new Error( "Échec. Il n'y a pas de réservations pour cet utilisateur." ) };
 
-            // Delete the personnal information of the washer according to the status of the booking
-            bringerBookings.forEach(element=>{  if( element.resa.status_id == 1 || element.resa.status_id == 5 || element.resa.status_id == 6 ){
-                                                    delete element.machine.machine_address;                                         
-                                                    delete element.machine.machine_zip_code;
-                                                    delete element.machine.machine_city;
-                                                    delete element.machine.machine_latitude;
-                                                    delete element.machine.machine_longitude;
-                                                    delete element.washer.washer_phone;
-                                                    delete element.washer.washer_mail; }})
+
+            // Delete the personnal information of the washer according to the status of the booking and add the total of the price
+            bringerBookings.forEach( element => {
+                if( element.resa.status_id == 1 || element.resa.status_id == 5 || element.resa.status_id == 6 ){
+                delete element.machine.machine_address;                                         
+                delete element.machine.machine_zip_code;
+                delete element.machine.machine_city;
+                delete element.machine.machine_latitude;
+                delete element.machine.machine_longitude;
+                delete element.washer.washer_phone;
+                delete element.washer.washer_mail;
+                }
+
+                // Get the total of the price
+                var total = 0;
+                for(const item of element.resa.options){
+                   total += item.price;
+                }
+                total +=element.machine.price;
+                element.resa.price = total;
+            })
+
+             // Adds the total of the price in the reservation
+            washerBookings.forEach( element => {
+                var total = 0;
+                for(const item of element.resa.options){
+                   total += item.price;
+                }
+                total +=element.machine.price;
+                element.resa.price = total;
+
+
+            })
 
             // Send the list of booking within a json
             return res.status(200).json({ washerBookings:washerBookings, bringerBookings:bringerBookings });
@@ -109,10 +133,10 @@ const bookController = {
         
         // Instance the active record class and call the change state function
         const update = new Booking({ id:id, statusId: statusId })
-        const returned = await update.changeState(update);
+        const [returned] = await update.changeState(update);
 
         // Otherwise return a succees message
-        return res.status(200).json({ message: "Mise à jour réussie ! La réservation a bien été modifié." })
+        return res.status(200).json({ booking:returned, message: "Mise à jour réussie ! La réservation a bien été modifié." })
         }
         catch(error){
             console.log(error);

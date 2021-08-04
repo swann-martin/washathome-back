@@ -7,7 +7,7 @@ const authMiddleware = require('./middlewares/authMiddleware')
 const geocodingZipCode = require('./middlewares/geocodingZipCode')
 const uploadMiddleware = require('./middlewares/uploadMiddleware/uploadMiddleware')
 const multer = require('multer')
-const upload = multer({dest: __dirname +'middlewares/uploadMiddleware//uploads/'})
+const upload = multer({dest: __dirname +'middlewares/uploadMiddleware/uploads/'})
 
 // Router declaration
 const router = express.Router();
