@@ -71,11 +71,16 @@ const bookController = {
             const returned = await newBooking.save();
             
             // Insert the options in include table
+            const options = []
             for(const option in req.body.options){
                 
-                await Booking.options(returned[0].id,req.body.options[option])
+                const optReturned = await Booking.options(returned[0].id,req.body.options[option])
+
+                options.push(optReturned[0].option_id)
             }
-          
+
+            returned.push(options)
+
             // Send confirmation message
             return res.status(201).json({ booking:returned, message: "Soumission réussie ! Votre réservervation a bien été prise en compte." })
         }
