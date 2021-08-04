@@ -137,10 +137,14 @@ class Booking {
                 this.bringerId, this.washerId,
                 this.machineId, this.statusId
             ]);
-
             // return the row of the reservation
             return rows.map(row => new Booking(row));
         }
+    }
+
+    // Delete row method
+    static async options(bookingId,optionId) {
+        await db.query('INSERT INTO include (booking_id,option_id) VALUES ($1, $2)', [bookingId,optionId]);
     }
 
         // Create row method
