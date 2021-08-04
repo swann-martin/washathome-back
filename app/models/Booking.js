@@ -142,25 +142,21 @@ class Booking {
         }
     }
 
-    // Delete row method
+    // Add option method
     static async options(bookingId,optionId) {
-        await db.query('INSERT INTO include (booking_id,option_id) VALUES ($1, $2)', [bookingId,optionId]);
+        const {rows} = await db.query('INSERT INTO include (booking_id,option_id) VALUES ($1, $2) RETURNING *', [bookingId,optionId]);
+
+        return rows.map(row => new Booking(row));
     }
 
-        // Create row method
-        async changeState() {
-            const { rows } = await db.query(`
-                    UPDATE booking 
-                    SET status_id = $1
-                    WHERE id = $2 RETURNING *;
-                `, [this.statusId,this.id]
-            );
-
-            this.id = rows[0].id;
-
-            // return the row of the reservation
-            return rows.map(row => new Booking(row))
-        }
+    // Change state method
+    async changeState() {
+        const { rows } = await db.query(`UPDATE booking SET status_id = $1 WHERE id = $2 RETURNING *;`
+                                        , [this.statusId,this.id]
+        );
+        // return the row of the reservation
+        return rows.map(row => new Booking(row))
+    }
 
     // Delete row method
     static async delete(id) {

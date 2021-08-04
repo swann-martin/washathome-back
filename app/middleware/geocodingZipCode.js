@@ -23,7 +23,8 @@ module.exports = async function geocodingZipCode (req,res,next) {
 
         // Otherwise send an error
         if(result.error){throw new Error()}
-
+        
+        // Send req object to the next function
         next();
     }
     catch(error){
