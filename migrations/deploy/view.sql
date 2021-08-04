@@ -10,7 +10,7 @@ SELECT booking.id,
     ELSE
 (m.price + 
     COALESCE((
-        SELECT price FROM option AS o
+        SELECT SUM (price) FROM option AS o
         INNER JOIN include AS i ON i.option_id = o.id
         WHERE i.booking_id = booking.id
     ),0)

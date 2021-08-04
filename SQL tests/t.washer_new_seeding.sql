@@ -12,13 +12,14 @@ SELECT
 		'options',ARRAY_AGG ("option".id || '   ' || "option".name || '   ' || "option".price)
 	) resa ,
 	json_build_object(
-		'machine_id', machine.id,
-		'machine_name', machine.name,
-		'machine_address',machine.address,
-		'machine_zip_code',machine.zip_code,
-		'machine_city',machine.city,
-		'machine_latitude',machine.latitude,
-		'machine_longitude',machine.longitude
+		'id', machine.id,
+		'name', machine.name,
+		'address',machine.address,
+		'zip_code',machine.zip_code,
+		'city',machine.city,
+		'latitude',machine.latitude,
+		'longitude',machine.longitude,
+		'price',machine.price
 	) machine
 FROM 
 	"user" u
@@ -29,4 +30,4 @@ JOIN status ON booking.status_id = status.id
 FULL OUTER JOIN "include" ON booking.id = "include".booking_id
 FULL OUTER JOIN "option" ON "option".id = "include".option_id
 WHERE u.id = 5
-GROUP BY (u.id, b.id, booking.id,machine.id,status.id,"option".id);
+GROUP BY (u.id, b.id, booking.id,machine.id,status.id,);

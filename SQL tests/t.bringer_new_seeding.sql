@@ -18,8 +18,9 @@ SELECT
         'zip_code',machine.zip_code,
         'city',machine.city,
         'latitude',machine.latitude,
-        'longitude',machine.longitude
-    ) machine
+        'longitude',machine.longitude,
+        'price',machine.price
+            ) machine
 FROM
     "user" b
 JOIN booking ON booking.bringer_id = b.id
@@ -29,4 +30,4 @@ JOIN status ON booking.status_id = status.id
 FULL OUTER JOIN "include" ON booking.id = "include".booking_id
 FULL OUTER JOIN "option" ON "option".id = "include".option_id
 WHERE b.id = 3
-GROUP BY (u.id, b.id, booking.id,machine.id,status.id,"option".id);
+GROUP BY (u.id, b.id, booking.id,machine.id,status.id,);

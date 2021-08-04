@@ -1,6 +1,15 @@
 // Imports
 const db = require('../dbClient');
-
+/**
+ * An entity representing the booking
+ * typedef Booking
+ * property {number} id
+ * property {number } temperature the washing temperature
+ * property {string} dispo availability beetween washer and bringer
+ * porperty {number} washer_id 
+ * property {number } bringer_id
+ * property{ number} status_id 
+ */
 class Booking {
 
     // Class constructor
@@ -9,7 +18,12 @@ class Booking {
             this[prop] = data[prop];
         }
     }
-
+/**
+ * Fetches all booking from database
+ * @static
+ * @async
+ * @returns {Array<Booking} An array of bookings
+ */
     // Find all method
     static async findAll() {
         const { rows } = await db.query('SELECT * FROM booking;');
@@ -17,7 +31,13 @@ class Booking {
         // Returns the row of the reservation
         return rows.map(row => new Booking(row));
     }
-
+/**
+ * Fetches a single booking from database
+ * @static
+ * @async
+ * @param {number} id 
+ * @returns {Booking|null} null if no booking matches the id in database
+ */
     // Find one method
     static async findById(id) {
         const { rows } = await db.query('SELECT * FROM booking WHERE id = $1;', [id]);
@@ -25,7 +45,11 @@ class Booking {
         // Returns the row of the reservation        
         return rows.map(row => new Booking(row));
     }
-
+/**
+ * Fetches all bookings with the bringer_id from database
+ * @param {number} id 
+ * @returns {json_build_object< Booking} null if no booking with bringer_id from database
+ */
     // Find by bringer method
     static async findByBringerId(id) {
         const { rows } = await db.query(`SELECT
@@ -66,6 +90,11 @@ class Booking {
         return rows.map(row => new Booking(row));
     }
 
+    /**
+     * Fetches all bookings with the wacher_id from database
+     * @param {number} id 
+     * @returns {json_build_object} null if no booking with wacher_id from database
+     */
     // Find by washer method
     static async findByWasherId(id) {
 
@@ -107,6 +136,10 @@ class Booking {
         return rows.map(row => new Booking(row));
     }
 
+    /**
+     * fetches to create or update a  booking
+     * @returns {array<Booking} a row created in the table booking 
+     */
     // Create row method
     async save() {
         if (this.id) {
