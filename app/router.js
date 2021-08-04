@@ -3,8 +3,11 @@ const express = require('express');
 const mainController = require('./controllers/mainController');
 const authController = require('./controllers/authController');
 const bookController = require('./controllers/bookController');
-const authMiddleware = require('./middleware/authMiddleware')
-const geocodingZipCode = require('./middleware/geocodingZipCode')
+const authMiddleware = require('./middlewares/authMiddleware')
+const geocodingZipCode = require('./middlewares/geocodingZipCode')
+const uploadMiddleware = require('./middlewares/uploadMiddleware/uploadMiddleware')
+const multer = require('multer')
+const upload = multer({dest: __dirname +'middlewares/uploadMiddleware//uploads/'})
 
 // Router declaration
 const router = express.Router();

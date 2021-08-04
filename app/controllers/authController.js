@@ -210,7 +210,7 @@ const authController = {
       await User.delete(user[0].id)
 
       // Otherwise return a confirmation
-      return res.status(200).json({ message: "Supression réussie ! Votre compte a bien été supprimé.", isConnected:false })
+      return res.status(200).json({ message: "Suppression réussie ! Votre compte a bien été supprimé.", isConnected:false })
     }
     catch(error){
       console.log(error);

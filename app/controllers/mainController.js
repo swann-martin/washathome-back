@@ -135,7 +135,7 @@ const mainController = {
             await Machine.delete(req.params.id)
 
             // Otherwise return a succees message
-            return res.status(200).json({ message: "Supression réussie ! La machine a bien été supprimé." })
+            return res.status(200).json({ message: "Suppression réussie ! La machine a bien été supprimé." })
         }
         catch(error){
             console.log(error);

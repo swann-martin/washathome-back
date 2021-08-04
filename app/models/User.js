@@ -56,12 +56,16 @@ class User {
                                         json_build_object('id', "user".id, 'pseudo', "user".pseudo,'lastname',"user".lastname,'firstname', "user".firstname,'phone',"user".phone,'mail',"user".mail,'avatar',"user".avatar)"user",
                                         json_build_object(
                                             'id', machine.id,
+                                            'capacity', machine.capacity,
                                             'name', machine.name,
-                                            'address',machine.address,
+                                            'description', machine.description,
                                             'zip_code',machine.zip_code,
                                             'city',machine.city,
+                                            'address',machine.address,
                                             'latitude',machine.latitude,
-                                            'longitude',machine.longitude
+                                            'longitude',machine.longitude,
+                                            'picture', machine.picture,
+                                            'price', machine.price
                                         ) machine
                                         FROM 
                                             "user"
