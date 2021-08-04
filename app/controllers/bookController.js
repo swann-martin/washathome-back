@@ -52,7 +52,7 @@ const bookController = {
 
         try{
             // Destructure the request body
-            const {temperature,dispo,washerId,machineId,statusId} = req.body
+            const {temperature,dispo,washerId,machineId} = req.body
 
             // Send error if the token doesn't correspond to the right user
             if (!(req.user.id == washerId)){throw new Error( "Échec. Vous ne pouvez pas réserver votre propre machine." )}
@@ -61,10 +61,10 @@ const bookController = {
             const newBooking = new Booking ({
             temperature:temperature,
             dispo:dispo,
-            bringer:req.user.id,
-            washer:washerId,
-            machine:machineId,
-            status:statusId
+            bringerId:req.user.id,
+            washerId:washerId,
+            machineId:machineId,
+            statusId:1
             })
 
             // Saving the new booking class instanced with all the data in the database
