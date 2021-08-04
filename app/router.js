@@ -24,7 +24,7 @@ router.delete('/machine/:id',authMiddleware,mainController.deleteAction); // Del
 // CRUD users
 router.post('/login',authController.loginAction); // Login route
 router.get('/autologin',authMiddleware,authController.autoLogin); // Auto login route
-router.post('/signup',upload.single('image'),authController.signupAction); // Signup route
+router.post('/signup',authController.signupAction); // Signup route
 router.patch('/account',authMiddleware,authController.updateAction); // Modify an user
 router.delete('/account',authMiddleware,authController.deleteAction); // Delete an user
 router.patch('/password',authMiddleware,authController.passUpdate) // Update the password
