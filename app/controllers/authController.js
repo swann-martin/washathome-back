@@ -114,7 +114,6 @@ const authController = {
       
       // Send confirmation message
       return res.status(201).json({ message : 'Enregistrement réussi ! Votre compte a bien été créé.',
-                                    isConnected : true,
                                     user : userDb[0].id,
                                     pseudo : userDb[0].pseudo,
                                     token:token })

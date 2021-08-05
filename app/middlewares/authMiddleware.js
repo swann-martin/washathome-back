@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 module.exports = function (req,res,next){
   try{
     //Check authorization existence
-    if (!req.headers.authorization) {throw new Error("Échec. Il manque la propriété 'authorization' dans le header." )}
+    if (!req.headers.authorization) {throw new Error("Échec. Veuillez vous connecter." )}
 
     // Keep the first part of the token in the header
     const token = req.headers.authorization.split(' ')[1]
