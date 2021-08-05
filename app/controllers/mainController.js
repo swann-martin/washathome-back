@@ -90,7 +90,7 @@ const mainController = {
     updateAction : async function(req,res) {
         try{
             // Destructure the request body
-            const {id,capacity,name,description,zipCode,address,city,latitude,longitude,price} = req.body
+            const {id,capacity,name,description,zip_code,address,city,latitude,longitude,price} = req.body
 
             // Create a instance of Machine class with the data from the body request form
             const newMachine = new Machine ({
@@ -98,7 +98,7 @@ const mainController = {
             capacity:capacity,
             name:name,
             description:description,
-            zipCode:zipCode,
+            zipCode:zip_code,
             address:address,
             city:city,
             latitude:latitude,
