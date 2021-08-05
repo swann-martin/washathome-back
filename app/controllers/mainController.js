@@ -1,4 +1,5 @@
 // Imports
+
 const Machine = require('../models/Machine')
 const User = require('../models/User')
 
@@ -75,8 +76,9 @@ const mainController = {
             })
 
             // Saving the new machine class instanced with all the data in the database
-            const returned = await newMachine.save();
-          
+            const [returned]  = await newMachine.save();
+            returned.title = returned.name;
+            delete returned.name;
             // Send confirmation message
             return res.status(201).json({ machine:returned, message: "Création réussie ! Votre machine a été ajoutée." })
         }

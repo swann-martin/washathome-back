@@ -123,9 +123,9 @@ const bookController = {
         const {id,statusId} = req.params
 
         // Verify if the status isn't already the same
-        /*const bookingDb = await Booking.findById(id);
+        const bookingDb = await Booking.findById(id);
         console.log(bookingDb[0].status_id,statusId)
-        if(bookingDb[0].status_id==statusId){ throw new Error( "Échec. La réservation a déjà cet état." ) }*/
+        if(bookingDb[0].status_id==statusId){ throw new Error( "Échec. La réservation a déjà cet état." ) }
         
         // Send error if the token doesn't correspond to the right user
         //if (!(bookingDb[0].bringer_id == req.user.id || bookingDb[0].washer_id == req.user.id)){
