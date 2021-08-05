@@ -14,8 +14,8 @@ module.exports = async function geocodingZipCode (req,res,next) {
         const json = await result.json()
         
         // Get the latitude and the longitude from the json response
-        const latitude = json.features[0].geometry.coordinates[0];
-        const longitude = json.features[0].geometry.coordinates[1];
+        const latitude = json.features[0].geometry.coordinates[1];
+        const longitude = json.features[0].geometry.coordinates[0];
         
         // Assignate back in the request body
         req.body.latitude = latitude;
