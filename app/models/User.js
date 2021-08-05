@@ -57,7 +57,7 @@ class User {
                                         json_build_object(
                                             'id', machine.id,
                                             'capacity', machine.capacity,
-                                            'name', machine.name,
+                                            'title', machine.name,
                                             'description', machine.description,
                                             'zip_code',machine.zip_code,
                                             'city',machine.city,
