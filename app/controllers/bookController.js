@@ -109,7 +109,7 @@ const bookController = {
             returned.total = total[0].total_amount;
 
             // Send confirmation message
-            return res.status(201).json({ booking:returned, message : "Soumission réussie ! Votre réservervation a bien été prise en compte." })
+            return res.status(201).json({ booking:returned, message : "Félicitations ! Votre réservervation a bien été prise en compte." })
         }
         catch(error){
             console.log(error);
@@ -137,7 +137,7 @@ const bookController = {
         const [returned] = await update.changeState(update);
 
         // Otherwise return a succees message
-        return res.status(200).json({ booking:returned, message: "Mise à jour réussie ! La réservation a bien été modifié." })
+        return res.status(200).json({ booking:returned, message: "Mise à jour réussie ! La réservation a bien été modifiée." })
         }
         catch(error){
             console.log(error);
@@ -158,7 +158,7 @@ const bookController = {
             await Booking.delete(req.params.id)
 
             // Otherwise return a succees message
-            return res.status(200).json({ message: "Suppression réussie ! La réservation a bien été supprimé." })
+            return res.status(200).json({ message: "Suppression réussie ! La réservation a bien été supprimée." })
         }
         catch(error){
             console.log(error);

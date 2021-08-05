@@ -78,7 +78,7 @@ const mainController = {
             const returned = await newMachine.save();
           
             // Send confirmation message
-            return res.status(201).json({ machine:returned, message: "Success ! The machine have been added." })
+            return res.status(201).json({ machine:returned, message: "Création réussie ! Votre machine a été ajoutée." })
         }
         catch(error){
             console.log(error);
@@ -112,7 +112,7 @@ const mainController = {
             const returned = await newMachine.save();
           
             // Send confirmation message
-            return res.status(200).json({ machine:returned, message: "Mise à jour réussie ! La machine a bien été modifié." })
+            return res.status(200).json({ machine:returned, message: "Mise à jour réussie ! La machine a bien été modifiée." })
         }
         catch(error){
             console.log(error);
@@ -135,7 +135,7 @@ const mainController = {
             await Machine.delete(req.params.id)
 
             // Otherwise return a succees message
-            return res.status(200).json({ message: "Suppression réussie ! La machine a bien été supprimé." })
+            return res.status(200).json({ message: "Suppression réussie ! La machine a bien été supprimée." })
         }
         catch(error){
             console.log(error);

@@ -81,10 +81,10 @@ const authController = {
 
       // Verify mail inexistance in database
       const mailDb = await User.findByMail(mail);
-      if(mailDb[0]){throw new Error( "Échec. L'adresse mail est déjà utilisé." )}
+      if(mailDb[0]){throw new Error( "Échec. L'adresse mail est déjà utilisée." )}
 
       // Check password confirmation concordance
-      if(password != passwordConfirm){throw new Error( "Échec. La confirmation de mot de passe n'est pas bonne." )}
+      if(password != passwordConfirm){throw new Error( "Échec. La confirmation du mot de passe est incorrecte." )}
       
       // Hash the password
       const hashedPassword = await bcrypt.hashSync(password, 10);
@@ -172,7 +172,7 @@ const authController = {
       const {password,passwordConfirm} = req.body
 
       // Check password confirmation concordance
-      if(password != passwordConfirm){throw new Error( "Échec. La confirmation de mot de passe n'est pas bonne." )}
+      if(password != passwordConfirm){throw new Error( "Échec. La confirmation du mot de passe est incorrecte." )}
 
       // Hash it
       const hashedPassword = bcrypt.hashSync(password, 10);
