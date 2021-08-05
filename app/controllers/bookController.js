@@ -127,9 +127,9 @@ const bookController = {
         if(bookingDb[0].status_id==statusId){ throw new Error( "Échec. La réservation a déjà cet état." ) }
         
         // Send error if the token doesn't correspond to the right user
-        if (!(bookingDb[0].bringer_id == req.user.id || bookingDb[0].washer_id == req.user.id)){
-            throw new Error( "Échec. Vous essayez de changer l'état d'une réservation qui ne vous appartient pas." )
-        }
+        //if (!(bookingDb[0].bringer_id == req.user.id || bookingDb[0].washer_id == req.user.id)){
+           // throw new Error( "Échec. Vous essayez de changer l'état d'une réservation qui ne vous appartient pas." )
+       // }
         
         // Instance the active record class and call the change state function
         const update = new Booking({ id:id, statusId: statusId })

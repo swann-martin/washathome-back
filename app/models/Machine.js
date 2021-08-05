@@ -35,6 +35,7 @@ class Machine {
 
     // Find by zip code method
     static async findByZipCode (zipCode) {
+
         const { rows } = await db.query(`SELECT * FROM machine WHERE zip_code =$1` , [zipCode]);
 
         // Returns the row of the machine

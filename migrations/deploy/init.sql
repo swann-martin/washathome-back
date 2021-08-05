@@ -69,8 +69,8 @@ CREATE TABLE include (
 );
 
 CREATE TABLE ancillary (
-    option_id INT REFERENCES option(id),
-    machine_id INT REFERENCES machine(id)
+    option_id INT REFERENCES option(id) ON DELETE CASCADE,
+    machine_id INT REFERENCES machine(id) ON DELETE CASCADE 
 );
 
 COMMIT;
