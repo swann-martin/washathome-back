@@ -3,8 +3,8 @@ const fetch = require('node-fetch')
 module.exports = async function geocodingZipCode (req,res,next) {
     try{
         // Get and concatenate the address from the json request body
-        const {zipCode,city,address} = req.body
-        const total = address+"+"+city+"+"+zipCode
+        const {zip_code,city,address} = req.body
+        const total = address+"+"+city+"+"+zip_code
         const concatenated = total.split(' ').join('+');
 
         // Fetch the gouv.fr api with the concatenated string

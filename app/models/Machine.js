@@ -46,7 +46,8 @@ class Machine {
     async save() {
         if (this.id) {
             // Update if class instance has an id
-            await db.query(`
+            console.log(this)
+           const { rows } = await db.query(`
             UPDATE machine SET
             capacity = $1, name = $2,
             description = $3, zip_code = $4,
@@ -56,8 +57,8 @@ class Machine {
             `, [
                 this.capacity, this.name,
                 this.description, this.zipCode,
-                this.address, this.city, this.price,
-                this.latitude, this.longitude,
+                this.address, this.city, 
+                this.latitude, this.longitude, this.price,
                 this.picture, this.userId,
                 this.id
             ]);
