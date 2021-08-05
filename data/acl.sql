@@ -1,0 +1,7 @@
+BEGIN;
+
+CREATE USER washathome WITH PASSWORD 'washathome';
+
+GRANT ALL PRIVILEGES ON ALL TABLES in SCHEMA public TO washathome;
+
+COMMIT;
