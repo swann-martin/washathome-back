@@ -152,12 +152,13 @@ class Booking {
     }
 
     // Change state method
-    async changeState(id, statusId) {
-        const { rows } = await db.query(`UPDATE booking SET status_id = $1 WHERE id = $2 RETURNING *;`
-                                        , [statusId,id]
+    async changeState() {
+        const { rows } = await db.query(`UPDATE booking SET status_id = $1 WHERE id = $2;`
+                                        , [this.status_id, this.id]
         );
         // return the row of the reservation
-        return rows.map(row => new Booking(row))
+        const res = {status_id: this.status_id, booking_id: this.id};
+        return res;
     }
 
     // Get the total of the reservation method
