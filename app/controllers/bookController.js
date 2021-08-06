@@ -132,12 +132,13 @@ const bookController = {
         //if (!(bookingDb[0].bringer_id == req.user.id || bookingDb[0].washer_id == req.user.id)){
            // throw new Error( "Échec. Vous essayez de changer l'état d'une réservation qui ne vous appartient pas." )
        // }
-        
+        const updatedBooking = new Booking ({id: id, status_id: statusId})
+        console.log('updatedBooking', updatedBooking);
         // Instance the active record class and call the change state function
-        const [update] = new Booking({ id:id, statusId: statusId })
+        const returned = await updatedBooking.changeState();
 
         // Otherwise return a succees message
-        return res.status(200).json({ booking:update, message: "Mise à jour réussie ! La réservation a bien été modifiée." })
+        return res.status(200).json({ booking:returned, message: "Mise à jour réussie ! La réservation a bien été modifiée." })
         }
         catch(error){
             console.log(error);
