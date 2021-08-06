@@ -37,7 +37,7 @@ class Booking {
                                             'tempResa', booking.temperature,
                                             'washer_id', u .id ,
                                             'bringer_id', b.id,
-                                            'status_id', status.id,
+                                            'status_id', booking.status_id,
                                             'status_name', status.label,
                                             'options', json_agg(json_build_object('id', "option".id, 'name', "option".name, 'price', "option".price))
                                         ) resa ,
@@ -79,7 +79,7 @@ class Booking {
                                           'tempResa', booking.temperature, 
                                           'washer_id', u.id , 
                                           'bringer_id', b .id, 
-                                          'status_id', status.id, 
+                                          'status_id', booking.status_id, 
                                           'status_name', status.label,
                                           'options', json_agg(json_build_object('id', "option".id, 'name', "option".name, 'price', "option".price))
                                         ) resa ,

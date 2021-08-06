@@ -15,6 +15,7 @@ module.exports = function (req,res,next){
     jwt.verify(token,process.env.TOKEN_SECRET, (error, user) => {
       if (error) {throw new Error(error)}
       req.user = user
+      console.log(req.user);
     })
 
     // Pass the req object to the next function
