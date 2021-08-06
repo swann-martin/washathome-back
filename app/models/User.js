@@ -100,6 +100,7 @@ class User {
             return rows.map(row => new User(row));
 
         } else {
+            console.log(this);
             const { rows } = await db.query(`
                 INSERT INTO "user" (pseudo, firstname, lastname, phone, mail, password, avatar)
                 VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;
@@ -110,6 +111,7 @@ class User {
                 this.avatar
             ]);
             // return the row of the user
+            console.log(rows);
             return rows.map(row => new User(row));
         }
     }
