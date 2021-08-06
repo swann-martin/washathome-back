@@ -152,9 +152,9 @@ class Booking {
     }
 
     // Change state method
-    async changeState() {
+    async changeState(id, statusId) {
         const { rows } = await db.query(`UPDATE booking SET status_id = $1 WHERE id = $2 RETURNING *;`
-                                        , [this.statusId,this.id]
+                                        , [statusId,id]
         );
         // return the row of the reservation
         return rows.map(row => new Booking(row))
