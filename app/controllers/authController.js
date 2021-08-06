@@ -69,8 +69,11 @@ const authController = {
     
     try{
       // Destructure the request body
-      const {pseudo,firstname,lastname,phone,mail,password,passwordConfirm,avatar} = req.body
-    
+      console.log('test du req.body',req.body);
+      const {pseudo,firstname,lastname,phone,mail,password,passwordConfirm} = req.body
+      console.log('req.files ou es tu ' , req.files.location)
+      const avatar = req.files[0]?.location || "";
+      console.log('avatar',avatar);
       // Verify pseudo inexistance in database
       const pseudoDb = await User.findByPseudo(pseudo);
       if(pseudoDb[0]){throw new Error( 'Échec. Le pseudo est déjà utilisé.' )}

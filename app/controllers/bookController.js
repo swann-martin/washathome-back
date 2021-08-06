@@ -134,6 +134,7 @@ const bookController = {
        // }
         
         // Instance the active record class and call the change state function
+        const update = new Booking({ id:id, statusId: statusId })
         const [returned] = await update.changeState(id, statusId);
 
         // Otherwise return a succees message
