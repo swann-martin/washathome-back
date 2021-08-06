@@ -134,11 +134,10 @@ const bookController = {
        // }
         
         // Instance the active record class and call the change state function
-        const update = new Booking({ id:id, statusId: statusId })
-        const [returned] = await update.changeState(id, statusId);
+        const [update] = new Booking({ id:id, statusId: statusId })
 
         // Otherwise return a succees message
-        return res.status(200).json({ booking:returned, message: "Mise à jour réussie ! La réservation a bien été modifiée." })
+        return res.status(200).json({ booking:update, message: "Mise à jour réussie ! La réservation a bien été modifiée." })
         }
         catch(error){
             console.log(error);
