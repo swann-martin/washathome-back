@@ -69,9 +69,9 @@ const authController = {
     
     try{
       // Destructure the request body
-      console.log('test du req.body',req.body);
+      
       const {pseudo,firstname,lastname,phone,mail,password,passwordConfirm} = req.body
-      console.log('req.files ou es tu ' , req.files.location)
+      
       const avatar = req.files[0]?.location || "";
       console.log('avatar',avatar);
       // Verify pseudo inexistance in database
@@ -134,7 +134,7 @@ const authController = {
       // Destructure the request
       const {id} = req.user
       const {pseudo,firstname,lastname,phone,mail,avatar} = req.body
-
+      //const avatar = req.files[0]?.location || "";
       // Create a instance of User class with the data from the body request form
       const newUser = new User ({
         id:id,

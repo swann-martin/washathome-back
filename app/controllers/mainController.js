@@ -58,8 +58,8 @@ const mainController = {
     submitAction : async function(req,res) {
         try{
             // Destructure the request body
-            const {capacity,title,description,zip_code,address,city,latitude,longitude,price,picture} = req.body
-
+            const {capacity,title,description,zip_code,address,city,latitude,longitude,price} = req.body
+            const picture = req.files[0]?.location || "";
             // Create a instance of Machine class with the data from the body request form
             const newMachine = new Machine ({
             capacity:capacity,
@@ -92,8 +92,8 @@ const mainController = {
     updateAction : async function(req,res) {
         try{
             // Destructure the request body
-            const {id,capacity,title,description,zip_code,address,city,latitude,longitude,picture,price} = req.body
-
+            const {id,capacity,title,description,zip_code,address,city,latitude,longitude,price,picture} = req.body
+           // const picture = req.files[0]?.location || "";
             // Create a instance of Machine class with the data from the body request form
             const newMachine = new Machine ({
             id:id,
