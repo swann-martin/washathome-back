@@ -120,7 +120,8 @@ const bookController = {
     stateAction : async function (req,res) {
         try{
         // Get the id and the status in the request body
-        const {id,statusId} = req.params
+        console.log(req.params);
+        const { id, statusId } = req.params
 
         // Verify if the status isn't already the same
         const bookingDb = await Booking.findById(id);
@@ -133,8 +134,7 @@ const bookController = {
        // }
         
         // Instance the active record class and call the change state function
-        const update = new Booking({ id:id, statusId: statusId })
-        const [returned] = await update.changeState(update);
+        const [returned] = await update.changeState(id, statusId);
 
         // Otherwise return a succees message
         return res.status(200).json({ booking:returned, message: "Mise à jour réussie ! La réservation a bien été modifiée." })
